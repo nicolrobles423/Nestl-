@@ -1,0 +1,87 @@
+<odoo>
+    <!-- ===================== FORMULARIO ===================== -->
+    <record id="galeria_arte_form" model="ir.ui.view">
+        <field name="name">galeria.arte.form</field>
+        <field name="model">galeria.arte</field>
+        <field name="arch" type="xml">
+            <form string="Obras de Arte">
+                <sheet>
+                    <group string="Información del Autor">
+                        <group>
+                            <field name="name"/>
+                            <field name="origen"/>
+                            <field name="anio_nacimiento"/>
+                        </group>
+                        <group>
+                            <field name="biografia"/>
+                        </group>
+                    </group>
+
+                    <group string="Información de la Obra">
+                        <group>
+                            <field name="obra"/>
+                            <field name="tecnica"/>
+                            <field name="soporte"/>
+                            <field name="anio_creacion"/>
+                            <field name="antiguedad" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="dimensiones"/>
+                            <field name="descripcion"/>
+                            <field name="fecha_ingreso"/>
+                        </group>
+                    </group>
+
+                    <group string="Valoración y Estado">
+                        <group>
+                            <field name="precio"/>
+                            <field name="precio_minimo"/>
+                            <field name="estado_conservacion"/>
+                        </group>
+                        <group>
+                            <field name="prioridad"/>
+                            <field name="disponible"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== LISTA ===================== -->
+    <record id="galeria_arte_list" model="ir.ui.view">
+        <field name="name">galeria.arte.tree</field>
+        <field name="model">galeria.arte</field>
+        <field name="arch" type="xml">
+            <list string="Obras de Arte Registradas">
+                <field name="obra"/>
+                <field name="name"/>
+                <field name="tecnica"/>
+                <field name="anio_creacion"/>
+                <field name="antiguedad"/>
+                <field name="estado_conservacion"/>
+                <field name="precio"/>
+                <field name="prioridad"/>
+                <field name="disponible"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== ACCIÓN ===================== -->
+    <record id="action_galeria_arte" model="ir.actions.act_window">
+        <field name="name">Galeria de Arte</field>
+        <field name="res_model">galeria.arte</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== MENÚ ===================== -->
+    <menuitem id="menu_galeria_arte_root"
+          name="Galería de Arte"
+          sequence="10"/>
+
+    <menuitem id="menu_galeria_obras"
+          name="Obras Registradas"
+          parent="menu_galeria_arte_root"
+          action="action_galeria_arte"
+          sequence="10"/>
+</odoo>

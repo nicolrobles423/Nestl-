@@ -1,0 +1,101 @@
+<odoo>
+    <!-- ===================== FORMULARIO ===================== -->
+    <record id="arte_restauracion_form" model="ir.ui.view">
+        <field name="name">arte.restauracion.form</field>
+        <field name="model">arte.restauracion</field>
+        <field name="arch" type="xml">
+            <form string="Restauración de Obra">
+                <sheet>
+                    <group string="Obra a Restaurar">
+                        <group>
+                            <field name="arte_id"/>
+                            <field name="nombre_autor" readonly="1"/>
+                            <field name="tecnica_arte" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="precio_arte" readonly="1"/>
+                            <field name="estado_previo" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Daño de la Obra">
+                        <group>
+                            <field name="estado"/>
+                            <field name="zona_afectada"/>
+                        </group>
+                        <group>
+                            <field name="descripcion_dano"/>
+                        </group>
+                    </group>
+
+                    <group string="Restaurador">
+                        <group>
+                            <field name="reparador"/>
+                            <field name="especialidad"/>
+                        </group>
+                        <group>
+                            <field name="empresa_restauracion"/>
+                        </group>
+                    </group>
+
+                    <group string="Fechas">
+                        <group>
+                            <field name="fecha_entrega"/>
+                            <field name="fecha_retiro"/>
+                        </group>
+                        <group>
+                            <field name="fecha_real_entrega"/>
+                            <field name="fase"/>
+                        </group>
+                    </group>
+
+                    <group string="Costos">
+                        <group>
+                            <field name="costo"/>
+                            <field name="costo_materiales"/>
+                            <field name="costo_total" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="porcentaje_costo" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Observaciones">
+                        <field name="observaciones" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== LISTA ===================== -->
+    <record id="arte_restauracion_list" model="ir.ui.view">
+        <field name="name">arte.restauracion.list</field>
+        <field name="model">arte.restauracion</field>
+        <field name="arch" type="xml">
+            <list string="Obras en Restauración">
+                <field name="arte_id"/>
+                <field name="reparador"/>
+                <field name="estado"/>
+                <field name="fase"/>
+                <field name="fecha_retiro"/>
+                <field name="costo_total"/>
+                <field name="porcentaje_costo"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== ACCIÓN ===================== -->
+    <record id="action_arte_restauracion" model="ir.actions.act_window">
+        <field name="name">Arte en Restauracion</field>
+        <field name="res_model">arte.restauracion</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== MENÚ ===================== -->
+    <menuitem id="menu_arte_restauracion"
+          name="Restauración"
+          parent="galeria_arte.menu_galeria_arte_root"
+          action="action_arte_restauracion"
+          sequence="20"/>
+</odoo>

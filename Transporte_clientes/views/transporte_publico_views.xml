@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_transporte_publico_form" model="ir.ui.view">
+        <field name="name">transporte.publico.form</field>
+        <field name="model">transporte.publico</field>
+        <field name="arch" type="xml">
+            <form string="Transporte Publico">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="edad"/>
+                        <field name="estudiante"/>
+                        <field name="discapacidad"/>
+                        <field name="reservacion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_transporte_publico_list" model="ir.ui.view">
+        <field name="name">transporte.publico.list</field>
+        <field name="model">transporte.publico</field>
+        <field name="arch" type="xml">
+            <list string="Transporte Publico">
+                <field name="name"/>
+                <field name="edad"/>
+                <field name="estudiante"/>
+                <field name="discapacidad"/>
+                <field name="reservacion"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_transporte_publico" model="ir.actions.act_window">
+        <field name="name">Apartado clientes</field>
+        <field name="res_model">transporte.publico</field> 
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_transporte_publico_root" name="Transporte Publico"/>
+    <menuitem id="menu_transporte_publico" 
+            name="Apartado clientes"
+            parent="menu_transporte_publico_root"
+            action="action_transporte_publico"
+            sequence="10"/>
+
+</odoo>

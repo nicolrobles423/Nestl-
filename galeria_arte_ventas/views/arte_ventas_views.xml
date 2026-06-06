@@ -1,0 +1,102 @@
+<odoo>
+    <!-- ===================== FORMULARIO ===================== -->
+    <record id="arte_ventas_form" model="ir.ui.view">
+        <field name="name">arte.ventas.form</field>
+        <field name="model">arte.ventas</field>
+        <field name="arch" type="xml">
+            <form string="Venta de Obra de Arte">
+                <sheet>
+                    <group string="Obra">
+                        <group>
+                            <field name="arte_id"/>
+                            <field name="nombre_autor" readonly="1"/>
+                            <field name="tecnica_arte" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="precio_arte" readonly="1"/>
+                            <field name="precio_minimo" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Precio y Descuento">
+                        <group>
+                            <field name="descuento"/>
+                            <field name="precio_con_descuento" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="iva" readonly="1"/>
+                            <field name="total" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Comisión y Ganancia">
+                        <group>
+                            <field name="comision_galeria" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="ganancia_neta" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Datos del Comprador">
+                        <group>
+                            <field name="cliente"/>
+                            <field name="cedula_cliente"/>
+                        </group>
+                        <group>
+                            <field name="telefono_cliente"/>
+                            <field name="email_cliente"/>
+                        </group>
+                    </group>
+
+                    <group string="Transacción">
+                        <group>
+                            <field name="metodo_pago"/>
+                            <field name="vendedor"/>
+                            <field name="estado"/>
+                        </group>
+                        <group>
+                            <field name="fecha_venta"/>
+                            <field name="fecha_entrega"/>
+                        </group>
+                    </group>
+
+                    <group string="Notas">
+                        <field name="notas" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== LISTA ===================== -->
+    <record id="arte_ventas_list" model="ir.ui.view">
+        <field name="name">arte.ventas.list</field>
+        <field name="model">arte.ventas</field>
+        <field name="arch" type="xml">
+            <list string="Registro de Ventas">
+                <field name="arte_id"/>
+                <field name="cliente"/>
+                <field name="metodo_pago"/>
+                <field name="fecha_venta"/>
+                <field name="descuento"/>
+                <field name="total"/>
+                <field name="estado"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== ACCIÓN ===================== -->
+    <record id="action_arte_ventas" model="ir.actions.act_window">
+        <field name="name">Ventas de Obras</field>
+        <field name="res_model">arte.ventas</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ===================== MENÚ ===================== -->
+    <menuitem id="menu_arte_ventas"
+          name="Ventas"
+          parent="galeria_arte.menu_galeria_arte_root"
+          action="action_arte_ventas"
+          sequence="30"/>
+</odoo>

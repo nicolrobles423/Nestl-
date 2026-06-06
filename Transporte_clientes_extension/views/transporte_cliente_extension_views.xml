@@ -1,0 +1,41 @@
+<odoo>
+
+
+    <record id="view_transporte_cliente_extension_form" model="ir.ui.view">
+        <field name="name">transporte.clientes.extension.form</field>
+        <field name="model">transporte.publico</field>
+        <field name="inherit_id" ref="Transporte_clientes.view_transporte_publico_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Información de Ruta">
+                    <field name="ruta_id"/>
+                    <field name="origen"/>
+                    <field name="destino"/>
+                    <field name="pasaje"/>
+                    <field name="total_de_descuento"/>
+                    <field name="precio_final"/>
+                    <field name="imagen_de_referencia" widget="image"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_transporte_cliente_extension_list" model="ir.ui.view">
+        <field name="name">transporte.clientes.extension.list</field>
+        <field name="model">transporte.publico</field>
+        <field name="inherit_id" ref="Transporte_clientes.view_transporte_publico_list"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="ruta_id"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="pasaje"/>
+                <field name="precio_final"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

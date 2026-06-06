@@ -1,0 +1,70 @@
+<odoo>
+    <record id="view_transporte_publico_form" model="ir.ui.view">
+        <field name="name">transporte.ruta.form</field>
+        <field name="model">transporte.ruta</field>
+        <field name="arch" type="xml">
+            <form string="Transporte Público">
+                <sheet>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="origen"/>
+                        <field name="destino"/>
+                        <field name="activo"/>
+                        <field name="pasaje"/>
+                        <field name="imagen_de_referencia" widget="image"/>
+                    </group>
+
+                    <group string="Información del Bus">
+                        <group>
+                        <field name="chofer_nombre"/>
+                        <field name="acompanante_nombre"/>
+                    </group>
+
+                    <group>
+                        <field name="bus_identificacion"/>
+                    </group>
+                    </group>
+
+                    <group string="Detalles del Bus">
+                        <group>
+                            <field name="numero_paradas"/>
+                            </group>
+
+                        <group>
+                            <field name="tamano_bus"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_transporte_publico_tree" model="ir.ui.view">
+        <field name="name">transporte.ruta.tree</field>
+        <field name="model">transporte.ruta</field>
+        <field name="arch" type="xml">
+            <list string="Transporte Público">
+                <field name="name"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="pasaje"/>
+                <field name="chofer_nombre"/>
+                <field name="bus_identificacion"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_transporte_publico" model="ir.actions.act_window">
+        <field name="name">Transporte Público</field>
+        <field name="res_model">transporte.ruta</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_transporte_publico_root" name="Registro de buses"/>
+
+    <menuitem id="menu_transporte_publico"
+              name="Rutas"
+              parent="menu_transporte_publico_root"
+              action="action_transporte_publico"
+              sequence="10"/>
+
+</odoo>
