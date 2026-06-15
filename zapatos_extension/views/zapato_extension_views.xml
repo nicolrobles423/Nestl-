@@ -12,8 +12,6 @@
 
         <!-- CORREGIDO: se ordenó type="xml" sin espacios innecesarios -->
         <field name="arch" type="xml">
-
-            <!-- CORREGIDO: se ordenó expr y position sin espacios innecesarios -->
             <xpath expr="//group" position="inside">
 
                 <!-- CORREGIDO: antes estaba Còdigo, debe ser codigo, sin tilde y en minúscula -->
@@ -54,21 +52,13 @@
         <field name="inherit_id" ref="zapatos.view_zapato_list"/>
 
         <!-- CORREGIDO: se ordenó type="xml" sin espacios innecesarios -->
-        <field name="arch" type="xml">
+        <field name="arch"type="xml">
 
-            <!-- CORREGIDO: se ordenó xpath sin espacios innecesarios -->
             <xpath expr="//list" position="inside">
-
-                <!-- CORREGIDO: nombre técnico del campo en minúscula -->
                 <field name="codigo"/>
-
-                <!-- CORREGIDO: nombre técnico del campo en minúscula -->
                 <field name="marca"/>
-
-                <!-- CORREGIDO: nombre técnico del campo en minúscula -->
                 <field name="color"/>
-
-                <!-- CORREGIDO: campo calculado para mostrar valor de inventario -->
+                <field name="descuento"/>
                 <field name="valor_inventario"/>
 
             </xpath>
