@@ -50,4 +50,4 @@ class Etiquetas(models.Model):
         ('liquidacion', 'Liquidación'),
     ], string='Etiqueta', required=True)
     color = fields.Integer(string='Color de la Etiqueta', default=0) 
-    zapato_id = fields.Many2many('zapatos.zapato', string='Zapato Relacionado')
+    zapato_ids = fields.Many2many('zapatos.zapato', string='Zapatos Relacionados')
