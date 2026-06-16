@@ -1,67 +1,68 @@
 <odoo>
+ 
     <record id="view_zapato_form_extension" model="ir.ui.view">
-
-        <!-- CORREGIDO: se quitaron espacios en name="name" y en el contenido -->
         <field name="name">zapatos.zapato.form.extension</field>
-
-        <!-- CORREGIDO: se quitó el espacio antes de zapatos.zapato -->
         <field name="model">zapatos.zapato</field>
-
-        <!-- CORREGIDO: se ordenó el atributo name sin espacios innecesarios -->
         <field name="inherit_id" ref="zapatos.view_zapato_form"/>
-
-        <!-- CORREGIDO: se ordenó type="xml" sin espacios innecesarios -->
         <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_disponible" string="Pasar a Disponible"
+                            type="object" class="oe_highlight"
+                            invisible="state not in ('draft', 'out_stock')"/>
+                    <button name="action_agotado" string="Marcar como Agotado"
+                            type="object"
+                            invisible="state != 'available'"/>
+                    <button name="action_descontinuar" string="Descontinuar producto"
+                            type="object"
+                            invisible="state == 'discontinued'"/>
+                    <button name="action_borrador" string="Regresar a Borrador"
+                            type="object"
+                            invisible="state != 'discontinued'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,available,out_stock"/>
+                </header>
+            </xpath>
             <xpath expr="//group" position="inside">
-
-                <!-- CORREGIDO: antes estaba Còdigo, debe ser codigo, sin tilde y en minúscula -->
                 <field name="codigo"/>
-
-                <!-- CORREGIDO: antes estaba Marca, debe ser marca, en minúscula -->
                 <field name="marca"/>
-
-                <!-- CORREGIDO: antes estaba Color, debe ser color, en minúscula -->
                 <field name="color"/>
-
-                <!-- CORREGIDO: antes estaba Material, debe ser material, en minúscula -->
                 <field name="material"/>
-
-                <!-- CORREGIDO: antes estaba Stock_minimo, debe ser stock_minimo, en minúscula -->
                 <field name="stock_minimo"/>
-                <field name="descuento"/>
-
-                <!-- CORREGIDO: este campo queda como solo lectura porque es calculado -->
                 <field name="valor_inventario" readonly="1"/>
-
-                <!-- CORREGIDO: antes estaba Descripcion, debe ser descripcion, en minúscula -->
                 <field name="descripcion"/>
-
             </xpath>
         </field>
     </record>
-
+ 
     <record id="view_zapato_list_extension" model="ir.ui.view">
-
-        <!-- CORREGIDO: se quitaron espacios en name="name" y en el contenido -->
         <field name="name">zapatos.zapato.list.extension</field>
-
-        <!-- CORREGIDO: se quitó el espacio al inicio y al final de zapatos.zapato -->
         <field name="model">zapatos.zapato</field>
-
-        <!-- CORREGIDO: se ordenó el atributo name sin espacios innecesarios -->
         <field name="inherit_id" ref="zapatos.view_zapato_list"/>
+<<<<<<< HEAD
 
         <!-- CORREGIDO: se ordenó type="xml" sin espacios innecesarios -->
         <field name="arch" type="xml">
 
+=======
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">stock_bajo == True or stock == 0</attribute>
+                <attribute name="decoration-warning">stock &gt; 0 and stock &gt;= 5 and stock &lt;= stock_minimo</attribute>
+                <attribute name="decoration-success">stock &gt; stock_minimo</attribute>
+            </xpath>
+            
+>>>>>>> c2f2ef69cb4af799bd4187825fd89a39fb1b8a63
             <xpath expr="//list" position="inside">
                 <field name="codigo"/>
                 <field name="marca"/>
                 <field name="color"/>
-                <field name="descuento"/>
+                <field name="state"/>
                 <field name="valor_inventario"/>
-
+                <field name="stock_minimo" column_invisible="1"/>
             </xpath>
         </field>
     </record>
+ 
 </odoo>
+ 

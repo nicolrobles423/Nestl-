@@ -9,6 +9,7 @@
                 <field name="precio"/>
                 <field name="stock"/>
                 <field name="activo"/>
+                <field name="stock_bajo" column_invisible="1"/>
             </list>
         </field>
     </record>
@@ -19,12 +20,19 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="alert alert-warning" role="alert"
+                        invisible="not stock_bajo">
+                            <strong>Stock Bajo:</strong>
+                                Este producto tiene menos de 5 unidades. Reponga el inventario.
+                    </div>
+
                     <group>
                         <field name="name"/>
                         <field name="talla"/>
                         <field name="precio"/>
                         <field name="stock"/>
                         <field name="activo"/>
+                        <field name="stock_bajo" readonly="1"/>
                     </group>
                 </sheet>
             </form>
