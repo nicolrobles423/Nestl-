@@ -52,7 +52,7 @@
         <field name="inherit_id" ref="zapatos.view_zapato_list"/>
 
         <!-- CORREGIDO: se ordenó type="xml" sin espacios innecesarios -->
-        <field name="arch"type="xml">
+        <field name="arch" type="xml">
 
             <xpath expr="//list" position="inside">
                 <field name="codigo"/>

@@ -9,7 +9,7 @@ class ZapatosZapato(models.Model):
     material = fields.Char (string='Material')
     descripcion = fields.Text(string = 'Descripciòn')
     stock_minimo = fields.Integer(string = 'Stock Minimo', default = 5)
-    descuento = fields.Boolean(string = 'Descuento', default = False)
+    descuento = fields.Float(string='Descuento (%)', default=0.0)
     
     
     valor_inventario = fields.Float(
