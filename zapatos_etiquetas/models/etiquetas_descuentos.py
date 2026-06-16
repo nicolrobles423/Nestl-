@@ -21,7 +21,7 @@ class EtiquetasDescuentos(models.Model):
         store=True
     )
     
-    zapato_id = fields.Many2one('zapatos.zapato', string='Zapato Relacionado')
+    zapato_id = fields.Many2one('zapatos.zapato', string='Zapato Relacionado', required=True)
 
     DESCUENTOS = {
         'descuento_navideño': 20.0,
@@ -69,3 +69,4 @@ class ZapatoExtension(models.Model):
     def _compute_precio_final(self):
         for record in self:
             record.precio_final = record.precio - (record.precio * record.descuento / 100)
+

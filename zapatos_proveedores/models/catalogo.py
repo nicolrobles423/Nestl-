@@ -11,15 +11,18 @@ class Proveedor(models.Model):
     )
 
     telefono = fields.Char(
-        string='Telefono'
+        string='Telefono',
+        required=True
     )
 
     email = fields.Char(
-        string='Correo Electronico'
+        string='Correo Electronico',
+        required=True
     )
 
     direccion = fields.Text(
-        string='Direccion'
+        string='Direccion',
+        required=True
     )
 
 
@@ -33,5 +36,6 @@ class Categoria(models.Model):
     )
 
     descripcion = fields.Text(
-        string='Descripcion'
+        string='Descripcion',
+        required=True
     )
