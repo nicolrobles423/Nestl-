@@ -6,10 +6,12 @@ class Zapato(models.Model):
 
     proveedor_id = fields.Many2one(
         'zapatos.proveedor',
-        string='Proveedor'
+        string='Proveedor',
+        required=True
     )
 
     categoria_id = fields.Many2one(
         'zapatos.categoria',
-        string='Categoria'
+        string='Categoria',
+        required=True
     )

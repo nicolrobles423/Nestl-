@@ -21,7 +21,7 @@ class EtiquetasDescuentos(models.Model):
         store=True
     )
     
-    zapato_id = fields.Many2one('zapatos.zapato', string='Zapato Relacionado')
+    zapato_id = fields.Many2one('zapatos.zapato', string='Zapato Relacionado', required=True)
 
     DESCUENTOS = {
         'descuento_navideño': 20.0,
@@ -49,5 +49,5 @@ class Etiquetas(models.Model):
         ('nuevo', 'Nuevo'),
         ('liquidacion', 'Liquidación'),
     ], string='Etiqueta', required=True)
-    color = fields.Integer(string='Color de la Etiqueta', default=0) 
-    zapato_ids = fields.Many2many('zapatos.zapato', string='Zapatos Relacionados')
+    color = fields.Integer(string='Color de la Etiqueta', default=0, required=True) 
+    zapato_ids = fields.Many2many('zapatos.zapato', string='Zapatos Relacionados', required=True)
