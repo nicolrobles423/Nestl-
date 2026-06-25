@@ -1,13 +1,7 @@
 *
 !.gitignore
-!zapatos/
-!zapatos/**
-!zapatos_extension/
-!zapatos_extension/**
-!zapatos_etiquetas/
-!zapatos_etiquetas/**
-!zapatos_proveedores/
-!zapatos_proveedores/**
+!Proyecto_Nestle/
+!Proyecto_Nestle/**
 **/__pycache__/
 *.pyc
 *.pyo
