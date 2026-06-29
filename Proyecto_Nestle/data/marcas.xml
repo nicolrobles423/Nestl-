@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="marca_nescafe" model="nestle.marca">
+            <field name="name">Nescafé</field>
+            <field name="descripcion">Marca líder mundial en café instantáneo y bebidas de café.</field>
+        </record>
+
+        <record id="marca_milo" model="nestle.marca">
+            <field name="name">Milo</field>
+            <field name="descripcion">Bebida achocolatada energética con vitaminas y minerales.</field>
+        </record>
+
+        <record id="marca_maggi" model="nestle.marca">
+            <field name="name">Maggi</field>
+            <field name="descripcion">Marca especializada en condimentos, sopas y caldos.</field>
+        </record>
+
+        <record id="marca_nestle" model="nestle.marca">
+            <field name="name">Nestlé</field>
+            <field name="descripcion">Marca principal con productos lácteos, chocolates y cereales.</field>
+        </record>
+
+        <record id="marca_kitkat" model="nestle.marca">
+            <field name="name">Kit Kat</field>
+            <field name="descripcion">Icónica barrita de chocolate con galleta crujiente.</field>
+        </record>
+
+    </data>
+</odoo>
