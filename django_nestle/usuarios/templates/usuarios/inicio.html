@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Nestlé</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/estilos.css' %}">
+</head>
+<body>
+
+    <div class="tarjeta">
+        <div class="franja"></div>
+        <div class="tarjeta-contenido bienvenida">
+            <h1>¡Bienvenido/a!</h1>
+            <p>Sesión iniciada como: <strong>{{ correo }}</strong></p>
+            <p class="enlace-secundario">
+                <a href="{% url 'logout' %}">Cerrar sesión</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

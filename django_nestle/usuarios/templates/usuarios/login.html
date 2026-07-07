@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión - Nestlé</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/estilos.css' %}">
+</head>
+<body>
+
+    <div class="tarjeta">
+        <div class="franja"></div>
+        <div class="tarjeta-contenido">
+
+            <h1>Iniciar sesión</h1>
+            <p class="subtitulo">Bienvenido/a de vuelta</p>
+
+            {% if messages %}
+                <div class="mensajes">
+                    {% for mensaje in messages %}
+                        <p class="mensaje-exito">{{ mensaje }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <p>
+                    {{ formulario.correo.label_tag }}
+                    {{ formulario.correo }}
+                    {{ formulario.correo.errors }}
+                </p>
+                <p>
+                    {{ formulario.contrasena.label_tag }}
+                    {{ formulario.contrasena }}
+                    {{ formulario.contrasena.errors }}
+                </p>
+                {{ formulario.non_field_errors }}
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p class="enlace-secundario">
+                ¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate</a>
+            </p>
+
+        </div>
+    </div>
+
+</body>
+</html>
