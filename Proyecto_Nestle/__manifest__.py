@@ -6,6 +6,7 @@
     'author': 'Nicole.R',
     'category': 'Industries',
     'application': True,
+    'license': 'LGPL-3',
     'depends': [
         'base',
         'product',
@@ -16,6 +17,7 @@
         'security/ir.model.access.csv',
         'data/categorias.xml',
         'data/marcas.xml',
+        'data/productos.xml',
         'views/menus_views.xml',
     ],
     'installable': True,
