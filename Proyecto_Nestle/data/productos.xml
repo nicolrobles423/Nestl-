@@ -190,10 +190,8 @@
             <field name="description_sale">Cereal energético con extracto de café y vitaminas. Ingredientes: maíz, café soluble, vitaminas B y C, hierro. 350g.</field>
         </record>
 
-        
         <!-- CONDIMENTOS -->
        
-
         <record id="producto_nescafe_syrup" model="product.template">
             <field name="name">Nescafé Syrup Café 250ml</field>
             <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
@@ -239,9 +237,7 @@
             <field name="description_sale">Base líquida de café para preparar bebidas frías o calientes. Ingredientes: extracto de café, agua, conservantes naturales. 250ml.</field>
         </record>
 
-        <!-- ================================ -->
-        <!-- MILO - BEBIDAS                  -->
-        <!-- ================================ -->
+        <!-- MILO - BEBIDAS  -->
 
         <record id="producto_milo_original" model="product.template">
             <field name="name">Milo Original 400g</field>
@@ -288,9 +284,7 @@
             <field name="description_sale">Sabor a chocolate más intenso con más cacao. Ingredientes: cacao intenso, leche en polvo, malta, vitaminas. 400g.</field>
         </record>
 
-        <!-- ================================ -->
-        <!-- MILO - LÁCTEOS                  -->
-        <!-- ================================ -->
+        <!-- MILO - LÁCTEOS  -->
 
         <record id="producto_milo_con_leche" model="product.template">
             <field name="name">Milo con Leche UHT 200ml</field>
@@ -337,9 +331,7 @@
             <field name="description_sale">Leche entera UHT enriquecida con Milo. Ingredientes: leche entera, cacao, vitaminas A, C y D, calcio. 1 litro.</field>
         </record>
 
-        <!-- ================================ -->
-        <!-- MILO - DULCES Y CHOCOLATES      -->
-        <!-- ================================ -->
+        <!-- MILO - DULCES Y CHOCOLATES -->
 
         <record id="producto_milo_barra" model="product.template">
             <field name="name">Milo Barra Energética 24g</field>
@@ -386,9 +378,8 @@
             <field name="description_sale">Galletas con cobertura de chocolate sabor Milo. Ingredientes: harina de trigo, azúcar, cacao, leche en polvo, malta. 150g.</field>
         </record>
 
-        <!-- ================================ -->
-        <!-- MILO - CEREALES                 -->
-        <!-- ================================ -->
+
+        <!-- MILO - CEREALES -->
 
         <record id="producto_milo_cereal_crunchy" model="product.template">
             <field name="name">Milo Cereal Crunchy 300g</field>
@@ -435,9 +426,7 @@
             <field name="description_sale">Cereal integral con sabor a Milo y fibra. Ingredientes: trigo integral, cacao, malta, fibra dietética, vitaminas. 350g.</field>
         </record>
 
-        <!-- ================================ -->
-        <!-- MILO - CONDIMENTOS              -->
-        <!-- ================================ -->
+        <!-- MILO - CONDIMENTOS   -->
 
         <record id="producto_milo_pasta_cacao" model="product.template">
             <field name="name">Milo Pasta Cacao 200g</field>
@@ -483,6 +472,63 @@
             <field name="type">consu</field>
             <field name="description_sale">Extracto líquido de cacao sabor Milo para bebidas y postres. Ingredientes: extracto de cacao, malta, agua, azúcar. 150ml.</field>
         </record>
+
+        <!-- MAGGI - BEBIDAS  -->
+
+        <record id="producto_maggi_caldo_liquido_pollo" model="product.template">
+            <field name="name">Maggi Caldo Líquido Pollo 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de pollo listo para tomar o cocinar. Ingredientes: agua, pollo, sal, cebolla, zanahoria, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_caldo_liquido_res" model="product.template">
+            <field name="name">Maggi Caldo Líquido Res 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de res listo para tomar o cocinar. Ingredientes: agua, carne de res, sal, cebolla, apio, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_caldo_liquido_verduras" model="product.template">
+            <field name="name">Maggi Caldo Líquido Verduras 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de verduras natural. Ingredientes: agua, zanahoria, cebolla, apio, puerro, sal, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_sopa_instantanea" model="product.template">
+            <field name="name">Maggi Sopa Instantánea Pollo 65g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">0.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Sopa instantánea de pollo lista en minutos. Ingredientes: fideos, sal, extracto de pollo, cebolla, especias. 65g.</field>
+        </record>
+
+        <record id="producto_maggi_bebida_caldo_huesos" model="product.template">
+            <field name="name">Maggi Caldo de Huesos 500ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">3.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo de huesos rico en colágeno y minerales. Ingredientes: agua, huesos de res, sal, especias, vinagre de manzana. 500ml.</field>
+        </record>
+
+        <!-- MAGGI - LÁCTEOS  -->
+
+        <record id="producto_maggi_crema_leche" model="product.template">
+            <field name="name">Maggi Crema de Leche 200ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">1.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Crema de leche para cocinar y repostería. Ingredientes: leche entera, crema,
 
     </data>
 </odoo>
