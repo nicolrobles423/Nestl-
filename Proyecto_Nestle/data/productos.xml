@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- BEBIDAS  -->
+
+        <record id="producto_nescafe_clasico" model="product.template">
+            <field name="name">Nescafé Clásico 170g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">5.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Café instantáneo clásico de Nescafé. Ingredientes: café soluble. Contiene cafeína. 170g.</field>
+        </record>
+
+        <record id="producto_nescafe_gold" model="product.template">
+            <field name="name">Nescafé Gold 100g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">7.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Café instantáneo premium de sabor suave y aroma intenso. Ingredientes: café soluble liofilizado. 100g.</field>
+        </record>
+
+        <record id="producto_nescafe_decaf" model="product.template">
+            <field name="name">Nescafé Decaf 85g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Café instantáneo descafeinado. Mismo sabor de Nescafé sin cafeína. Ingredientes: café soluble descafeinado. 85g.</field>
+        </record>
+
+        <record id="producto_nescafe_3en1" model="product.template">
+            <field name="name">Nescafé 3en1 Caja x10</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">3.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Café instantáneo con leche y azúcar en sobres individuales. Ingredientes: azúcar, creamer, café soluble. Caja x10 sobres.</field>
+        </record>
+
+        <record id="producto_nescafe_latte" model="product.template">
+            <field name="name">Nescafé Latte 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con leche estilo latte. Suave y cremoso. Ingredientes: azúcar, leche en polvo, café soluble. 140g.</field>
+        </record>
+
+        <!-- LÁCTEOS  -->
+
+        <record id="producto_nescafe_con_leche" model="product.template">
+            <field name="name">Nescafé con Leche Polvo 170g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">5.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Mezcla de café instantáneo con leche en polvo. Ingredientes: leche entera en polvo, café soluble, azúcar. 170g.</field>
+        </record>
+
+        <record id="producto_nescafe_cappuccino" model="product.template">
+            <field name="name">Nescafé Cappuccino 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Cappuccino instantáneo cremoso con leche. Ingredientes: azúcar, creamer de leche, café soluble, cacao. 140g.</field>
+        </record>
+
+        <record id="producto_nescafe_mocha" model="product.template">
+            <field name="name">Nescafé Mocha 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con chocolate y leche. Ingredientes: azúcar, leche en polvo, café soluble, cacao en polvo. 140g.</field>
+        </record>
+
+        <record id="producto_nescafe_vainilla" model="product.template">
+            <field name="name">Nescafé Vainilla 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con leche y aroma de vainilla. Ingredientes: azúcar, leche en polvo, café soluble, aroma natural de vainilla. 140g.</field>
+        </record>
+
+        <record id="producto_nescafe_caramelo" model="product.template">
+            <field name="name">Nescafé Caramelo 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con leche y sabor a caramelo. Ingredientes: azúcar, leche en polvo, café soluble, aroma de caramelo. 140g.</field>
+        </record>
+
+        <!-- DULCES Y CHOCOLATES  -->
+
+        <record id="producto_nescafe_choco_mocha" model="product.template">
+            <field name="name">Nescafé Choco Mocha 170g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con intenso sabor a chocolate. Ingredientes: azúcar, cacao en polvo, café soluble, leche en polvo. 170g.</field>
+        </record>
+
+        <record id="producto_nescafe_dark_choco" model="product.template">
+            <field name="name">Nescafé Dark Choco 170g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Café con chocolate oscuro intenso. Ingredientes: cacao amargo en polvo, café soluble, azúcar. 170g.</field>
+        </record>
+
+        <record id="producto_nescafe_mokaccino" model="product.template">
+            <field name="name">Nescafé Mokaccino 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Mezcla de café y chocolate estilo mokaccino. Ingredientes: azúcar, leche en polvo, café soluble, cacao. 140g.</field>
+        </record>
+
+        <record id="producto_nescafe_choco_caramelo" model="product.template">
+            <field name="name">Nescafé Choco Caramelo 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con chocolate y caramelo. Ingredientes: azúcar, cacao, café soluble, aroma de caramelo. 140g.</field>
+        </record>
+
+        <record id="producto_nescafe_choco_vainilla" model="product.template">
+            <field name="name">Nescafé Choco Vainilla 140g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">6.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida de café con chocolate y vainilla. Ingredientes: azúcar, cacao, café soluble, aroma natural de vainilla. 140g.</field>
+        </record>
+     
+        <!--  CEREALES  -->
+
+        <record id="producto_nescafe_granola" model="product.template">
+            <field name="name">Nescafé Cereal Granola 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Granola con sabor a café para el desayuno. Ingredientes: avena, miel, café soluble, almendras. 300g.</field>
+        </record>
+
+        <record id="producto_nescafe_muesli" model="product.template">
+            <field name="name">Nescafé Muesli Café 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Muesli con cereales y extracto de café. Ingredientes: avena, trigo, pasas, café soluble. 300g.</field>
+        </record>
+
+        <record id="producto_nescafe_granola_dark" model="product.template">
+            <field name="name">Nescafé Granola Dark 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Granola oscura con café intenso y cacao. Ingredientes: avena, cacao, café soluble, miel. 300g.</field>
+        </record>
+
+        <record id="producto_nescafe_avena_cafe" model="product.template">
+            <field name="name">Nescafé Avena Café 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Avena instantánea con sabor a café. Ingredientes: avena en hojuelas, café soluble, azúcar. 300g.</field>
+        </record>
+
+        <record id="producto_nescafe_cereal_energy" model="product.template">
+            <field name="name">Nescafé Cereal Energy 350g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">5.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Cereal energético con extracto de café y vitaminas. Ingredientes: maíz, café soluble, vitaminas B y C, hierro. 350g.</field>
+        </record>
+
+        <!-- CONDIMENTOS -->
+       
+        <record id="producto_nescafe_syrup" model="product.template">
+            <field name="name">Nescafé Syrup Café 250ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Sirope de café para añadir a bebidas y postres. Ingredientes: azúcar, extracto de café, agua. 250ml.</field>
+        </record>
+
+        <record id="producto_nescafe_pasta_espresso" model="product.template">
+            <field name="name">Nescafé Pasta Espresso 200g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">5.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Pasta concentrada de café espresso para repostería y bebidas. Ingredientes: café soluble concentrado, azúcar. 200g.</field>
+        </record>
+
+        <record id="producto_nescafe_extracto" model="product.template">
+            <field name="name">Nescafé Extracto 150ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">3.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Extracto líquido concentrado de café. Ideal para repostería. Ingredientes: extracto de café, agua. 150ml.</field>
+        </record>
+
+        <record id="producto_nescafe_concentrate" model="product.template">
+            <field name="name">Nescafé Concentrate 200ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Concentrado líquido de café listo para diluir. Ingredientes: café soluble, agua, azúcar. 200ml.</field>
+        </record>
+
+        <record id="producto_nescafe_base_liquida" model="product.template">
+            <field name="name">Nescafé Base Líquida 250ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_nescafe"/>
+            <field name="list_price">4.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Base líquida de café para preparar bebidas frías o calientes. Ingredientes: extracto de café, agua, conservantes naturales. 250ml.</field>
+        </record>
+
+        <!-- MILO - BEBIDAS  -->
+
+        <record id="producto_milo_original" model="product.template">
+            <field name="name">Milo Original 400g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida achocolatada energética clásica. Ingredientes: azúcar, cacao, leche en polvo, malta, vitaminas y minerales. 400g.</field>
+        </record>
+
+        <record id="producto_milo_energy" model="product.template">
+            <field name="name">Milo Energy 200g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida energética con malta y cacao para deportistas. Ingredientes: azúcar, malta, cacao, vitaminas B, C y D. 200g.</field>
+        </record>
+
+        <record id="producto_milo_zero" model="product.template">
+            <field name="name">Milo Zero 400g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">5.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida achocolatada sin azúcar añadida. Ingredientes: cacao, leche en polvo, malta, edulcorantes, vitaminas. 400g.</field>
+        </record>
+
+        <record id="producto_milo_activ_go" model="product.template">
+            <field name="name">Milo Activ-Go 400g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">5.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Fórmula activa con proteínas y minerales para niños. Ingredientes: leche en polvo, malta, cacao, calcio, hierro, vitaminas. 400g.</field>
+        </record>
+
+        <record id="producto_milo_intense" model="product.template">
+            <field name="name">Milo Intense 400g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">5.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Sabor a chocolate más intenso con más cacao. Ingredientes: cacao intenso, leche en polvo, malta, vitaminas. 400g.</field>
+        </record>
+
+        <!-- MILO - LÁCTEOS  -->
+
+        <record id="producto_milo_con_leche" model="product.template">
+            <field name="name">Milo con Leche UHT 200ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">1.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bebida lista de Milo con leche entera UHT. Ingredientes: leche entera, cacao, azúcar, vitaminas. 200ml.</field>
+        </record>
+
+        <record id="producto_milo_yogur" model="product.template">
+            <field name="name">Milo Yogur 150g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">1.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Yogur sabor Milo con chocolate y malta. Ingredientes: leche, cultivos lácticos, cacao, azúcar, malta. 150g.</field>
+        </record>
+
+        <record id="producto_milo_batido" model="product.template">
+            <field name="name">Milo Batido 250ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">1.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Batido lácteo sabor Milo listo para tomar. Ingredientes: leche semidescremada, cacao, azúcar, vitaminas B y D. 250ml.</field>
+        </record>
+
+        <record id="producto_milo_cremoso" model="product.template">
+            <field name="name">Milo Cremoso 200g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">2.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Postre lácteo cremoso sabor Milo. Ingredientes: leche entera, crema, cacao, azúcar, gelatina. 200g.</field>
+        </record>
+
+        <record id="producto_milo_leche_uht" model="product.template">
+            <field name="name">Milo Leche UHT 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">2.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Leche entera UHT enriquecida con Milo. Ingredientes: leche entera, cacao, vitaminas A, C y D, calcio. 1 litro.</field>
+        </record>
+
+        <!-- MILO - DULCES Y CHOCOLATES -->
+
+        <record id="producto_milo_barra" model="product.template">
+            <field name="name">Milo Barra Energética 24g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">0.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Barra de cereal y chocolate sabor Milo. Ingredientes: avena, cacao, azúcar, leche en polvo, malta. 24g.</field>
+        </record>
+
+        <record id="producto_milo_choco_snack" model="product.template">
+            <field name="name">Milo Choco Snack 30g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">0.85</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Snack de chocolate con sabor Milo. Ingredientes: azúcar, cacao, leche en polvo, malta, grasa vegetal. 30g.</field>
+        </record>
+
+        <record id="producto_milo_trufas" model="product.template">
+            <field name="name">Milo Trufas x6 90g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">2.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Trufas de chocolate rellenas con crema sabor Milo. Ingredientes: chocolate, crema de leche, cacao, malta. Caja x6 unidades.</field>
+        </record>
+
+        <record id="producto_milo_bombones" model="product.template">
+            <field name="name">Milo Bombones x12 120g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Bombones de chocolate rellenos de crema Milo. Ingredientes: chocolate con leche, crema, cacao, malta. Caja x12 unidades.</field>
+        </record>
+
+        <record id="producto_milo_galleta" model="product.template">
+            <field name="name">Milo Galleta Choco 150g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_dulces"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">2.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Galletas con cobertura de chocolate sabor Milo. Ingredientes: harina de trigo, azúcar, cacao, leche en polvo, malta. 150g.</field>
+        </record>
+
+
+        <!-- MILO - CEREALES -->
+
+        <record id="producto_milo_cereal_crunchy" model="product.template">
+            <field name="name">Milo Cereal Crunchy 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Cereal crujiente sabor Milo para el desayuno. Ingredientes: maíz, azúcar, cacao, malta, vitaminas. 300g.</field>
+        </record>
+
+        <record id="producto_milo_granola" model="product.template">
+            <field name="name">Milo Granola 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Granola con sabor a Milo y trozos de chocolate. Ingredientes: avena, miel, cacao, malta, almendras. 300g.</field>
+        </record>
+
+        <record id="producto_milo_avena" model="product.template">
+            <field name="name">Milo Avena 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Avena instantánea con sabor a Milo. Ingredientes: avena en hojuelas, cacao, malta, azúcar, vitaminas. 300g.</field>
+        </record>
+
+        <record id="producto_milo_flakes" model="product.template">
+            <field name="name">Milo Flakes 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Hojuelas de maíz con sabor a chocolate Milo. Ingredientes: maíz, cacao, azúcar, malta, hierro, vitaminas. 300g.</field>
+        </record>
+
+        <record id="producto_milo_cereal_integral" model="product.template">
+            <field name="name">Milo Cereal Integral 350g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_cereales"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Cereal integral con sabor a Milo y fibra. Ingredientes: trigo integral, cacao, malta, fibra dietética, vitaminas. 350g.</field>
+        </record>
+
+        <!-- MILO - CONDIMENTOS   -->
+
+        <record id="producto_milo_pasta_cacao" model="product.template">
+            <field name="name">Milo Pasta Cacao 200g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Pasta de cacao sabor Milo para untar o repostería. Ingredientes: cacao, azúcar, leche en polvo, malta, grasa vegetal. 200g.</field>
+        </record>
+
+        <record id="producto_milo_sirope" model="product.template">
+            <field name="name">Milo Sirope 300ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Sirope de chocolate sabor Milo para postres y bebidas. Ingredientes: azúcar, cacao, agua, malta, conservantes. 300ml.</field>
+        </record>
+
+        <record id="producto_milo_polvo_reposteria" model="product.template">
+            <field name="name">Milo Polvo Repostería 250g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Polvo de cacao Milo para uso en repostería y cocina. Ingredientes: cacao en polvo, malta, azúcar. 250g.</field>
+        </record>
+
+        <record id="producto_milo_base_batidos" model="product.template">
+            <field name="name">Milo Base Batidos 300g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">4.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Base en polvo para preparar batidos sabor Milo. Ingredientes: cacao, malta, leche en polvo, azúcar, vitaminas. 300g.</field>
+        </record>
+
+        <record id="producto_milo_extracto_cacao" model="product.template">
+            <field name="name">Milo Extracto Cacao 150ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_condimentos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_milo"/>
+            <field name="list_price">3.00</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Extracto líquido de cacao sabor Milo para bebidas y postres. Ingredientes: extracto de cacao, malta, agua, azúcar. 150ml.</field>
+        </record>
+
+        <!-- MAGGI - BEBIDAS  -->
+
+        <record id="producto_maggi_caldo_liquido_pollo" model="product.template">
+            <field name="name">Maggi Caldo Líquido Pollo 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de pollo listo para tomar o cocinar. Ingredientes: agua, pollo, sal, cebolla, zanahoria, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_caldo_liquido_res" model="product.template">
+            <field name="name">Maggi Caldo Líquido Res 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de res listo para tomar o cocinar. Ingredientes: agua, carne de res, sal, cebolla, apio, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_caldo_liquido_verduras" model="product.template">
+            <field name="name">Maggi Caldo Líquido Verduras 1L</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">2.50</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo líquido de verduras natural. Ingredientes: agua, zanahoria, cebolla, apio, puerro, sal, especias. 1 litro.</field>
+        </record>
+
+        <record id="producto_maggi_sopa_instantanea" model="product.template">
+            <field name="name">Maggi Sopa Instantánea Pollo 65g</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">0.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Sopa instantánea de pollo lista en minutos. Ingredientes: fideos, sal, extracto de pollo, cebolla, especias. 65g.</field>
+        </record>
+
+        <record id="producto_maggi_bebida_caldo_huesos" model="product.template">
+            <field name="name">Maggi Caldo de Huesos 500ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_bebidas"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">3.25</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Caldo de huesos rico en colágeno y minerales. Ingredientes: agua, huesos de res, sal, especias, vinagre de manzana. 500ml.</field>
+        </record>
+
+        <!-- MAGGI - LÁCTEOS  -->
+
+        <record id="producto_maggi_crema_leche" model="product.template">
+            <field name="name">Maggi Crema de Leche 200ml</field>
+            <field name="categ_id" ref="Proyecto_Nestle.category_lacteos"/>
+            <field name="marca_id" ref="Proyecto_Nestle.marca_maggi"/>
+            <field name="list_price">1.75</field>
+            <field name="type">consu</field>
+            <field name="description_sale">Crema de leche para cocinar y repostería. Ingredientes: leche entera, crema,
+
+    </data>
+</odoo>

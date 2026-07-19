@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Acción para el menú principal -->
+        <record id="action_nestle_main" model="ir.actions.act_window">
+            <field name="name">Nestlé Project</field>
+            <field name="res_model">nestle.marca</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Menú principal -->
+        <menuitem
+            id="menu_nestle_project"
+            name="Nestlé Project"
+            action="action_nestle_main"
+            sequence="10"/>
+
+        <!-- Submenú Marcas -->
+        <menuitem
+            id="menu_nestle_marcas"
+            name="Marcas"
+            parent="menu_nestle_project"
+            action="action_nestle_main"
+            sequence="10"/>
+
+        <!-- Submenú Productos -->
+        <menuitem
+            id="menu_nestle_productos"
+            name="Productos"
+            parent="menu_nestle_project"
+            sequence="20"/>
+
+        <!-- Submenú Inventario -->
+        <menuitem
+            id="menu_nestle_inventario"
+            name="Inventario"
+            parent="menu_nestle_project"
+            sequence="30"/>
+
+        <!-- Submenú Pedidos -->
+        <menuitem
+            id="menu_nestle_pedidos"
+            name="Pedidos"
+            parent="menu_nestle_project"
+            sequence="40"/>
+
+        <!-- Submenú Reportes -->
+        <menuitem
+            id="menu_nestle_reportes"
+            name="Reportes"
+            parent="menu_nestle_project"
+            sequence="50"/>
+
+    </data>
+</odoo>

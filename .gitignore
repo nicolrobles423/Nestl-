@@ -1,0 +1,44 @@
+*
+!.gitignore
+!Proyecto_Nestle/
+!Proyecto_Nestle/**
+!django_nestle/
+!django_nestle/**
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+venv_django/
+django_nestle/venv_django/
+.env
+.env.*
+
+# Django
+django_nestle/db.sqlite3
+*.sqlite3
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Cachés
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

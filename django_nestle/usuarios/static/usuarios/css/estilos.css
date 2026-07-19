@@ -1,0 +1,167 @@
+/* ==== Fuente ==== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ==== Base ==== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FAF6EF;
+    font-family: 'Inter', sans-serif;
+    color: #2B2420;
+    padding: 24px;
+}
+
+/* ==== Tarjeta central ==== */
+.tarjeta {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(43, 36, 32, 0.10);
+    overflow: hidden;
+}
+
+/* Franja de color en la parte superior, como el sello de un empaque */
+.franja {
+    height: 8px;
+    background: linear-gradient(90deg, #A31621 0%, #D89B3C 100%);
+}
+
+.tarjeta-contenido {
+    padding: 40px 36px 36px;
+}
+
+/* ==== Encabezado ==== */
+.tarjeta-contenido h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: #2B2420;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #8C8279;
+    margin: 0 0 28px;
+}
+
+/* ==== Mensajes (éxito) ==== */
+.mensajes {
+    margin-bottom: 20px;
+}
+
+.mensaje-exito {
+    background: #F1F7EC;
+    border: 1px solid #B9DBA0;
+    color: #3F6B26;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ==== Formulario ==== */
+form p {
+    margin: 0 0 18px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8C8279;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    border: 1.5px solid #E5DFD5;
+    border-radius: 10px;
+    background: #FDFCFA;
+    color: #2B2420;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #A31621;
+    box-shadow: 0 0 0 3px rgba(163, 22, 33, 0.12);
+}
+
+/* Errores de validación de Django */
+.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+    color: #A31621;
+    font-size: 13px;
+}
+
+/* ==== Botón ==== */
+button[type="submit"] {
+    width: 100%;
+    padding: 13px;
+    margin-top: 6px;
+    background: #A31621;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+button[type="submit"]:hover {
+    background: #8A121C;
+}
+
+button[type="submit"]:active {
+    transform: scale(0.99);
+}
+
+/* ==== Enlace inferior ==== */
+.enlace-secundario {
+    text-align: center;
+    font-size: 14px;
+    color: #8C8279;
+    margin-top: 22px;
+}
+
+.enlace-secundario a {
+    color: #A31621;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.enlace-secundario a:hover {
+    text-decoration: underline;
+}
+
+/* ==== Página de bienvenida ==== */
+.bienvenida {
+    text-align: center;
+}
+
+.bienvenida p {
+    color: #8C8279;
+    font-size: 15px;
+}

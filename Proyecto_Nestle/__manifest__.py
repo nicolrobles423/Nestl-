@@ -1,0 +1,25 @@
+{
+    'name': 'Nestlé Proyecto',
+    'version': '1.0',
+    'summary': 'Sistema de gestión de productos en Nestlé',
+    'description': 'Módulo principal del proyecto Nestlé para gestión de productos, marcas, pedidos e inventario.',
+    'author': 'Nicole.R',
+    'category': 'Industries',
+    'application': True,
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'product',
+        'stock',
+    ],
+    'data': [
+        'data/grupos_usuarios.xml',
+        'security/ir.model.access.csv',
+        'data/categorias.xml',
+        'data/marcas.xml',
+        'data/productos.xml',
+        'views/menus_views.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

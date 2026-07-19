@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Categoría raíz -->
+        <record id="category_alimentos" model="product.category">
+            <field name="name">Alimentos</field>
+        </record>
+
+        <!-- Subcategorías -->
+        <record id="category_bebidas" model="product.category">
+            <field name="name">Bebidas</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+
+        <record id="category_lacteos" model="product.category">
+            <field name="name">Lácteos</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+
+        <record id="category_dulces" model="product.category">
+            <field name="name">Dulces y chocolates</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+
+        <record id="category_cereales" model="product.category">
+            <field name="name">Cereales</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+
+        <record id="category_condimentos" model="product.category">
+            <field name="name">Condimentos</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+
+    </data>
+</odoo>
