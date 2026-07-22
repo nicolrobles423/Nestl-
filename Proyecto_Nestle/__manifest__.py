@@ -5,12 +5,12 @@
     'description': 'Módulo principal del proyecto Nestlé para gestión de productos, marcas, pedidos e inventario.',
     'author': 'Nicole.R',
     'category': 'Industries',
-    'application': True,
     'license': 'LGPL-3',
     'depends': [
         'base',
         'product',
         'stock',
+        'sale',
     ],
     'data': [
         'data/grupos_usuarios.xml',
@@ -18,8 +18,14 @@
         'data/categorias.xml',
         'data/marcas.xml',
         'data/productos.xml',
+        'views/productos_views.xml',
+        'views/marcas_views.xml',
+        'views/categorias_views.xml',
+        'views/pedidos_views.xml',
+        'views/reportes_views.xml',
         'views/menus_views.xml',
     ],
     'installable': True,
     'auto_install': False,
+    'application': True,
 }

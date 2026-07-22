@@ -4,27 +4,42 @@
 
         <record id="marca_nescafe" model="nestle.marca">
             <field name="name">Nescafé</field>
-            <field name="description">Marca líder mundial en café instantáneo y bebidas de café.</field>
+            <field name="descripcion">Marca líder mundial en café instantáneo y bebidas de café.</field>
         </record>
 
         <record id="marca_milo" model="nestle.marca">
             <field name="name">Milo</field>
-            <field name="description">Bebida achocolatada energética con vitaminas y minerales.</field>
+            <field name="descripcion">Bebida achocolatada energética con vitaminas y minerales.</field>
         </record>
 
         <record id="marca_maggi" model="nestle.marca">
             <field name="name">Maggi</field>
-            <field name="description">Marca especializada en condimentos, sopas y caldos.</field>
+            <field name="descripcion">Marca especializada en condimentos, sopas y caldos.</field>
         </record>
 
         <record id="marca_nestle" model="nestle.marca">
             <field name="name">Nestlé</field>
-            <field name="description">Marca principal con productos lácteos, chocolates y cereales.</field>
+            <field name="descripcion">Marca principal con productos lácteos, chocolates y cereales.</field>
         </record>
 
         <record id="marca_kitkat" model="nestle.marca">
             <field name="name">Kit Kat</field>
-            <field name="description">Icónica barrita de chocolate con galleta crujiente.</field>
+            <field name="descripcion">Icónica barrita de chocolate con galleta crujiente.</field>
+        </record>
+
+        <record id="marca_nestum" model="nestle.marca">
+            <field name="name">Nestum</field>
+            <field name="descripcion">Cereal infantil para la alimentación complementaria desde los 6 meses.</field>
+        </record>
+
+        <record id="marca_ricacao" model="nestle.marca">
+            <field name="name">Ricacao</field>
+            <field name="descripcion">Bebida en polvo de cacao ecuatoriano, con hierro y vitaminas.</field>
+        </record>
+
+        <record id="marca_amor" model="nestle.marca">
+            <field name="name">Amor</field>
+            <field name="descripcion">Galletas rellenas y wafers, marca ecuatoriana de Nestlé.</field>
         </record>
 
     </data>

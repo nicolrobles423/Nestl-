@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista lista de marcas -->
+    <record id="vista_marcas_lista" model="ir.ui.view">
+        <field name="name">Marcas - Vista Lista</field>
+        <field name="model">nestle.marca</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Lista de Marcas" editable="bottom" create="true">
+                <field name="name" string="Nombre Marca" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulario de marcas -->
+    <record id="vista_marcas_formulario" model="ir.ui.view">
+        <field name="name">Marcas - Vista Formulario</field>
+        <field name="model">nestle.marca</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Marca Nestlé">
+                <sheet>
+                    <notebook>
+                        <!-- Pestaña 1: Información de la marca -->
+                        <page string="Información General">
+                            <group>
+                                <group>
+                                    <field name="name" string="Nombre de Marca" required="1" placeholder="Ej: Nescafé" />
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 2: Logo -->
+                        <page string="Logo">
+                            <group>
+                                <group>
+                                    <field name="logo" string="Logo de Marca" widget="image" />
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 3: Auditoría -->
+                        <page string="Información Adicional" groups="base.group_no_one">
+                            <group string="Auditoría">
+                                <group>
+                                    <field name="create_uid" string="Creado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="create_date" string="Fecha de Creación" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group string="Última Modificación">
+                                <group>
+                                    <field name="write_uid" string="Modificado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="write_date" string="Fecha de Modificación" readonly="1" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda -->
+    <record id="vista_marcas_busqueda" model="ir.ui.view">
+        <field name="name">Marcas - Vista de Búsqueda</field>
+        <field name="model">nestle.marca</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Marcas">
+                <field name="name" string="Nombre de Marca" />
+
+                <separator />
+
+                <group expand="0" string="Agrupar por...">
+                    <filter name="agrupar_nombre" string="Nombre" context="{'group_by': 'name'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción de ventana para abrir marcas -->
+    <record id="accion_marcas" model="ir.actions.act_window">
+        <field name="name">Marcas</field>
+        <field name="res_model">nestle.marca</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="vista_marcas_lista" />
+        <field name="help">Catálogo de marcas Nestlé disponibles.</field>
+    </record>
+
+</odoo>

@@ -21,7 +21,7 @@
             id="menu_nestle_marcas"
             name="Marcas"
             parent="menu_nestle_project"
-            action="action_nestle_main"
+            action="Proyecto_Nestle.accion_marcas"
             sequence="10"/>
 
         <!-- Submenú Productos -->
@@ -29,13 +29,15 @@
             id="menu_nestle_productos"
             name="Productos"
             parent="menu_nestle_project"
+            action="Proyecto_Nestle.accion_productos"
             sequence="20"/>
 
-        <!-- Submenú Inventario -->
+        <!-- Submenú Categorías -->
         <menuitem
             id="menu_nestle_inventario"
-            name="Inventario"
+            name="Categorías"
             parent="menu_nestle_project"
+            action="Proyecto_Nestle.accion_categorias"
             sequence="30"/>
 
         <!-- Submenú Pedidos -->
@@ -43,6 +45,7 @@
             id="menu_nestle_pedidos"
             name="Pedidos"
             parent="menu_nestle_project"
+            action="Proyecto_Nestle.accion_pedidos"
             sequence="40"/>
 
         <!-- Submenú Reportes -->
@@ -50,6 +53,7 @@
             id="menu_nestle_reportes"
             name="Reportes"
             parent="menu_nestle_project"
+            action="Proyecto_Nestle.accion_reportes"
             sequence="50"/>
 
     </data>

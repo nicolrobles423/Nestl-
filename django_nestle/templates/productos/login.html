@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Iniciar sesión - Catálogo Nestlé{% endblock %}
+
+{% block estilos %}
+        .titulo-seccion {
+            font-size: 1.8em;
+            font-family: 'Fraunces', serif;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+        }
+
+        .contenedor-cuenta {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .formulario-checkout {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .formulario-checkout label {
+            font-weight: 500;
+            color: var(--color-primario);
+            margin-bottom: -8px;
+        }
+
+        .formulario-checkout input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .formulario-checkout input:focus {
+            outline: none;
+            border-color: var(--color-acento);
+            box-shadow: 0 0 5px rgba(232, 163, 61, 0.4);
+        }
+
+        .mensaje-error-form {
+            background-color: #FFEBEE;
+            color: var(--color-agotado);
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .boton-finalizar {
+            display: inline-block;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .boton-finalizar:hover {
+            background-color: var(--color-primario-oscuro);
+        }
+
+        .enlace-cuenta {
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: -5px;
+        }
+
+        .enlace-cuenta a {
+            color: var(--color-primario);
+            font-weight: 600;
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Iniciar sesión</h2>
+
+        <div class="contenedor-cuenta">
+            <form method="post" class="formulario-checkout">
+                {% csrf_token %}
+                {% if error %}
+                <div class="mensaje-error-form">{{ error }}</div>
+                {% endif %}
+                <input type="hidden" name="siguiente" value="{{ request.GET.siguiente }}">
+
+                <label>Correo electrónico</label>
+                <input type="email" name="email" value="{{ email }}" required autofocus>
+
+                <label>Contraseña</label>
+                <input type="password" name="contrasena" required>
+
+                <button type="submit" class="boton-finalizar">Entrar</button>
+
+                <p class="enlace-cuenta">¿No tienes cuenta? <a href="{% url 'productos:registro' %}">Regístrate</a></p>
+            </form>
+        </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Pedido Confirmado - Catálogo Nestlé{% endblock %}
+
+{% block estilos %}
+        .confirmacion {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 50px 30px;
+        }
+
+        .confirmacion h2 {
+            font-family: 'Fraunces', serif;
+            color: var(--color-texto);
+            margin-bottom: 12px;
+        }
+
+        .confirmacion p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .total-confirmacion {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--color-acento);
+            margin-bottom: 25px;
+        }
+
+        .boton-seguir {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--color-primario);
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .boton-seguir:hover {
+            background-color: #f5f5f5;
+        }
+{% endblock %}
+
+{% block contenido %}
+        <div class="confirmacion">
+            <h2>¡Gracias por tu compra!</h2>
+            <p>Tu pedido <strong>{{ pedido.name }}</strong> fue registrado correctamente en Nestlé.</p>
+            <div class="total-confirmacion">Total: ${{ pedido.amount_total }}</div>
+            <a href="{% url 'productos:catalogo' %}" class="boton-seguir">Volver al catálogo</a>
+        </div>
+{% endblock %}

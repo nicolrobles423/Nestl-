@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Finalizar Compra - Catálogo Nestlé{% endblock %}
+
+{% block estilos %}
+        .titulo-seccion {
+            font-size: 1.8em;
+            font-family: 'Fraunces', serif;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        @media (max-width: 700px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .formulario-checkout {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .formulario-checkout label {
+            font-weight: 500;
+            color: var(--color-primario);
+            margin-bottom: -8px;
+        }
+
+        .formulario-checkout input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .formulario-checkout input:focus {
+            outline: none;
+            border-color: var(--color-acento);
+            box-shadow: 0 0 5px rgba(232, 163, 61, 0.4);
+        }
+
+        .mensaje-error-form {
+            background-color: #FFEBEE;
+            color: var(--color-agotado);
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .resumen-pedido {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+
+        .resumen-pedido h3 {
+            color: var(--color-primario);
+            margin-bottom: 15px;
+            font-family: 'Fraunces', serif;
+        }
+
+        .linea-resumen {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95em;
+        }
+
+        .total-resumen {
+            border-bottom: none;
+            border-top: 2px solid var(--color-primario);
+            margin-top: 8px;
+            padding-top: 12px;
+            font-weight: 700;
+            font-size: 1.15em;
+            color: var(--color-acento);
+        }
+
+        .boton-finalizar {
+            display: inline-block;
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Finalizar Compra</h2>
+
+        <div class="checkout-grid">
+            <form method="post" class="formulario-checkout">
+                {% csrf_token %}
+                {% if error %}
+                <div class="mensaje-error-form">{{ error }}</div>
+                {% endif %}
+
+                <label>Nombre completo</label>
+                <input type="text" name="nombre" value="{{ nombre }}" required>
+
+                <label>Correo electrónico</label>
+                <input type="email" name="email" value="{{ email }}" required>
+
+                <label>Teléfono</label>
+                <input type="text" name="telefono" value="{{ telefono }}">
+
+                <button type="submit" class="boton-finalizar">Confirmar Pedido</button>
+            </form>
+
+            <div class="resumen-pedido">
+                <h3>Resumen del pedido</h3>
+                {% for item in items %}
+                <div class="linea-resumen">
+                    <span>{{ item.cantidad }} × {{ item.producto.name }}</span>
+                    <span>${{ item.subtotal }}</span>
+                </div>
+                {% endfor %}
+                <div class="linea-resumen total-resumen">
+                    <span>Total</span>
+                    <span>${{ total }}</span>
+                </div>
+            </div>
+        </div>
+{% endblock %}

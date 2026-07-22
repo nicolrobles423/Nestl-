@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Catálogo Nestlé{% endblock %}</title>
+    <style>
+        :root {
+            --color-primario: #A0522D;
+            --color-primario-oscuro: #7A3D1F;
+            --color-acento: #E8A33D;
+            --color-fondo: #FBF4EC;
+            --color-texto: #3A2E27;
+            --color-disponible: #7C9A3C;
+            --color-bajo: #E0883C;
+            --color-agotado: #C0392B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-acento) 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header-superior {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .titulo-header {
+            color: white;
+            text-decoration: none;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-family: 'Fraunces', serif;
+        }
+
+        .enlace-carrito {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .enlace-carrito:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .contador-carrito {
+            background: white;
+            color: var(--color-primario);
+            font-size: 0.8em;
+            font-weight: 700;
+            border-radius: 50%;
+            min-width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        .zona-cuenta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .zona-cuenta a,
+        .zona-cuenta button {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .zona-cuenta a:hover,
+        .zona-cuenta button:hover {
+            text-decoration: underline;
+        }
+
+        .mensajes {
+            max-width: 1200px;
+            margin: 15px auto 0;
+            padding: 0 20px;
+        }
+
+        .mensaje {
+            background-color: #E8F5E9;
+            color: var(--color-disponible);
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #3B2A1F;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        {% block estilos %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-superior">
+            <a href="{% url 'productos:catalogo' %}" class="titulo-header">
+                <h1>Catálogo Nestlé</h1>
+            </a>
+            <div class="zona-cuenta">
+                {% if user.is_authenticated %}
+                <span>Hola, {{ user.first_name|default:user.email }}</span>
+                <form method="post" action="{% url 'productos:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                {% else %}
+                <a href="{% url 'productos:login' %}">Iniciar sesión</a>
+                <a href="{% url 'productos:registro' %}">Registrarse</a>
+                {% endif %}
+                <a href="{% url 'productos:carrito' %}" class="enlace-carrito">
+                    Carrito
+                    <span class="contador-carrito">{{ carrito_cantidad_total }}</span>
+                </a>
+            </div>
+        </div>
+        <p>Explora nuestros productos de calidad</p>
+    </header>
+
+    {% if messages %}
+    <div class="mensajes">
+        {% for mensaje in messages %}
+        <div class="mensaje">{{ mensaje }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="contenedor">
+        {% block contenido %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Proyecto Nestlé - E-commerce Ecuador</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

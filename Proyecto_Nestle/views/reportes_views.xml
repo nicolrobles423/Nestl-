@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de búsqueda para reportes -->
+    <record id="vista_reportes_busqueda" model="ir.ui.view">
+        <field name="name">Reportes - Vista de Búsqueda</field>
+        <field name="model">sale.order</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Filtrar Reportes">
+                <field name="date_order" string="Fecha Pedido" />
+
+                <separator />
+
+                <filter name="reporte_confirmados" string="Pedidos Confirmados" domain="[('state', '=', 'sale')]" />
+
+                <separator />
+
+                <group expand="0" string="Agrupar por...">
+                    <filter name="agrupar_vendedor" string="Vendedor" context="{'group_by': 'user_id'}" />
+                    <filter name="agrupar_cliente" string="Cliente" context="{'group_by': 'partner_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Reporte: Ventas por Mes -->
+    <record id="reporte_ventas_mes" model="ir.actions.act_window">
+        <field name="name">Ventas por Mes</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">pivot</field>
+        <field name="help">Análisis de ventas totales agrupadas por mes.</field>
+    </record>
+
+    <!-- Reporte: Productos Más Vendidos -->
+    <record id="reporte_productos_vendidos" model="ir.actions.act_window">
+        <field name="name">Productos Más Vendidos</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="help">Ranking de productos más vendidos por cantidad y monto.</field>
+    </record>
+
+    <!-- Reporte: Clientes Top -->
+    <record id="reporte_clientes_top" model="ir.actions.act_window">
+        <field name="name">Clientes Top</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">pivot</field>
+        <field name="help">Clientes con mayor valor de compras.</field>
+    </record>
+
+    <!-- Dashboard de Reportes (menú principal) -->
+    <record id="accion_reportes" model="ir.actions.act_window">
+        <field name="name">Reportes</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="help">Análisis y reportes de ventas, productos y clientes.</field>
+    </record>
+
+</odoo>

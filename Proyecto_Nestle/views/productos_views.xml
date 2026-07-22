@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista lista de productos con columnas principales -->
+    <record id="vista_productos_lista" model="ir.ui.view">
+        <field name="name">Productos - Vista Lista</field>
+        <field name="model">product.template</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Lista de Productos" editable="bottom" create="true">
+                <field name="name" string="Nombre del Producto" />
+                <field name="marca_id" string="Marca" optional="show" />
+                <field name="categ_id" string="Categoría" optional="show" />
+                <field name="default_code" string="Código Interno" optional="show" />
+                <field name="standard_price" string="Precio Costo (USD)" optional="show" />
+                <field name="list_price" string="Precio Venta (USD)" />
+                <field name="qty_available" string="Stock Disponible" readonly="1" />
+                <field name="active" string="Activo" optional="show" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulario completo con 4 pestañas para gestionar productos -->
+    <record id="vista_productos_formulario" model="ir.ui.view">
+        <field name="name">Productos - Vista Formulario</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Producto Nestlé">
+
+                <sheet>
+                    <notebook>
+                        <!-- Pestaña 1: Información básica del producto -->
+                        <page string="Información General">
+                            <group>
+                                <group>
+                                    <field name="name" string="Nombre del Producto" required="1" placeholder="Ej: Nescafé Clásico 200g" />
+                                </group>
+                                <group>
+                                    <field name="default_code" string="Código Interno (SKU)" placeholder="Ej: NESCAFE-200-001" groups="Proyecto_Nestle.group_administrador" />
+                                </group>
+                            </group>
+
+                            <group>
+                                <group>
+                                    <field name="marca_id" string="Marca Nestlé" required="1" groups="Proyecto_Nestle.group_administrador" />
+                                </group>
+                                <group>
+                                    <field name="categ_id" string="Categoría" required="1" groups="Proyecto_Nestle.group_administrador" domain="[('parent_id.parent_id.name', '=', 'Alimentos')]" />
+                                </group>
+                            </group>
+
+                            <group>
+                                <field name="description_sale" string="Descripción / Ingredientes / Información Nutricional" nolabel="1" placeholder="Ej: Café soluble 100%, sin azúcar. Proteína: 1g, Fibra: 0g..." rows="4" />
+                            </group>
+
+                            <group>
+                                <group>
+                                    <field name="active" string="¿Producto Activo?" groups="Proyecto_Nestle.group_administrador" />
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 2: Precios y stock -->
+                        <page string="Precios y Stock">
+                            <group string="Información de Precios">
+                                <group>
+                                    <field name="standard_price" string="Precio de Costo (USD)" required="1" groups="Proyecto_Nestle.group_administrador" help="Costo de compra del producto. Usado para calcular margen de ganancia." />
+                                </group>
+                                <group>
+                                    <field name="list_price" string="Precio de Venta (USD)" required="1" groups="Proyecto_Nestle.group_administrador" help="Precio público del producto. Debe ser mayor que el costo." />
+                                </group>
+                            </group>
+
+                            <group string="Información de Stock">
+                                <group>
+                                    <field name="qty_available" string="Cantidad Disponible" readonly="1" help="Stock actual en el almacén. Actualizado automáticamente con ventas." />
+                                </group>
+                                <group>
+                                    <field name="virtual_available" string="Cantidad Virtual" readonly="1" help="Stock disponible menos las órdenes reservadas." />
+                                </group>
+                            </group>
+
+
+                        </page>
+
+                        <!-- Pestaña 3: Detalles técnicos y envío -->
+                        <page string="Detalles Técnicos" groups="Proyecto_Nestle.group_administrador">
+                            <group string="Propiedades Técnicas">
+                                <group>
+                                    <field name="type" string="Tipo de Producto" required="1" help="Debe ser 'Producto almacenable' para e-commerce." />
+                                </group>
+                            </group>
+
+                            <group string="Información de Envío">
+                                <group>
+                                    <field name="weight" string="Peso (kg)" help="Peso del producto en kilogramos. Requerido para cálculo de envío." />
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 4: Auditoría y metadata -->
+                        <page string="Información Adicional" groups="Proyecto_Nestle.group_administrador">
+                            <group string="Auditoría">
+                                <group>
+                                    <field name="create_uid" string="Creado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="create_date" string="Fecha de Creación" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group string="Última Modificación">
+                                <group>
+                                    <field name="write_uid" string="Modificado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="write_date" string="Fecha de Modificación" readonly="1" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista kanban: tarjetas visuales agrupadas por marca -->
+    <record id="vista_productos_kanban" model="ir.ui.view">
+        <field name="name">Productos - Vista Kanban</field>
+        <field name="model">product.template</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban string="Productos por Marca" default_group_by="marca_id">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_card_header">
+                                <strong><field name="name" /></strong>
+                            </div>
+
+                            <div class="oe_kanban_card_body">
+                                <div>
+                                    <strong>Código:</strong> 
+                                    <field name="default_code" />
+                                </div>
+
+                                <div>
+                                    <strong>Categoría:</strong> 
+                                    <field name="categ_id" />
+                                </div>
+
+                                <div>
+                                    <strong>Precio:</strong> 
+                                    $<field name="list_price" />
+                                </div>
+
+                                <div t-if="record.qty_available.raw_value > 0" class="text-success">
+                                    <strong>Stock:</strong> 
+                                    <field name="qty_available" /> unidades
+                                </div>
+                                <div t-else="" class="text-danger">
+                                    <strong>Stock:</strong> 
+                                    <field name="qty_available" /> unidades (¡AGOTADO!)
+                                </div>
+                            </div>
+
+                            <div class="oe_kanban_card_footer">
+                                <a type="edit" class="btn btn-primary btn-sm">Editar</a>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda con filtros por marca, categoría, stock y estado -->
+    <record id="vista_productos_busqueda" model="ir.ui.view">
+        <field name="name">Productos - Vista de Búsqueda</field>
+        <field name="model">product.template</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Productos">
+                <field name="name" string="Nombre o Descripción" />
+                <field name="default_code" string="Código Interno" />
+
+                <separator />
+
+                <!-- Filtros por marca -->
+                <filter name="filtro_nescafe" string="Nescafé" domain="[('marca_id.name', '=', 'Nescafé')]" />
+                <filter name="filtro_milo" string="Milo" domain="[('marca_id.name', '=', 'Milo')]" />
+                <filter name="filtro_maggi" string="Maggi" domain="[('marca_id.name', '=', 'Maggi')]" />
+                <filter name="filtro_nestle" string="Nestlé" domain="[('marca_id.name', '=', 'Nestlé')]" />
+                <filter name="filtro_kitkat" string="Kit Kat" domain="[('marca_id.name', '=', 'Kit Kat')]" />
+
+                <separator />
+
+                <!-- Filtros por categoría -->
+                <filter name="filtro_bebidas" string="Bebidas" domain="[('categ_id.name', '=', 'Bebidas')]" />
+                <filter name="filtro_lacteos" string="Lácteos" domain="[('categ_id.name', '=', 'Lácteos')]" />
+                <filter name="filtro_dulces" string="Dulces y Chocolates" domain="[('categ_id.name', '=', 'Dulces y chocolates')]" />
+                <filter name="filtro_cereales" string="Cereales" domain="[('categ_id.name', '=', 'Cereales')]" />
+                <filter name="filtro_condimentos" string="Condimentos" domain="[('categ_id.name', '=', 'Condimentos')]" />
+
+                <separator />
+
+                <!-- Filtros por disponibilidad de stock - OPERADORES ESCAPADOS -->
+                <filter name="filtro_stock_disponible" string="Con Stock Disponible" domain="[('qty_available', '&gt;', 0)]" />
+                <filter name="filtro_stock_bajo" string="Stock Bajo" domain="[('qty_available', '&lt;=', 10)]" />
+                <filter name="filtro_agotado" string="Agotado" domain="[('qty_available', '=', 0)]" />
+
+                <separator />
+
+                <!-- Filtros por estado -->
+                <filter name="filtro_activos" string="Productos Activos" domain="[('active', '=', True)]" />
+                <filter name="filtro_inactivos" string="Productos Inactivos" domain="[('active', '=', False)]" />
+
+                <separator />
+
+                <!-- Agrupación de resultados -->
+                <group expand="0" string="Agrupar por...">
+                    <filter name="agrupar_marca" string="Marca" context="{'group_by': 'marca_id'}" />
+                    <filter name="agrupar_categoria" string="Categoría" context="{'group_by': 'categ_id'}" />
+                    <filter name="agrupar_estado" string="Estado" context="{'group_by': 'active'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción de ventana para abrir el listado de productos -->
+    <record id="accion_productos" model="ir.actions.act_window">
+        <field name="name">Productos</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="view_id" ref="vista_productos_lista" />
+        <field name="domain">[('marca_id', '!=', False)]</field>
+        <field name="context">{'search_default_filtro_activos': 1}</field>
+        <field name="help">Catálogo completo de productos Nestlé con precios, stock y detalles.</field>
+    </record>
+
+</odoo>

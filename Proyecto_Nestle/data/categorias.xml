@@ -7,30 +7,148 @@
             <field name="name">Alimentos</field>
         </record>
 
-        <!-- Subcategorías -->
-        <record id="category_bebidas" model="product.category">
-            <field name="name">Bebidas</field>
+        <!-- ============ NESCAFÉ ============ -->
+        <record id="category_nescafe" model="product.category">
+            <field name="name">Nescafé</field>
             <field name="parent_id" ref="category_alimentos"/>
         </record>
+        <record id="category_nescafe_tradicion" model="product.category">
+            <field name="name">Tradición</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
+        <record id="category_nescafe_gold" model="product.category">
+            <field name="name">Gold</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
+        <record id="category_nescafe_3en1" model="product.category">
+            <field name="name">3 en 1</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
+        <record id="category_nescafe_dolcegusto" model="product.category">
+            <field name="name">Dolce Gusto</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
+        <record id="category_nescafe_descafeinado" model="product.category">
+            <field name="name">Descafeinado</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
+        <record id="category_nescafe_diario" model="product.category">
+            <field name="name">Diario</field>
+            <field name="parent_id" ref="category_nescafe"/>
+        </record>
 
-        <record id="category_lacteos" model="product.category">
+        <!-- ============ MILO ============ -->
+        <record id="category_milo" model="product.category">
+            <field name="name">Milo</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_milo_polvo" model="product.category">
+            <field name="name">Milo en Polvo</field>
+            <field name="parent_id" ref="category_milo"/>
+        </record>
+        <record id="category_milo_rtd" model="product.category">
+            <field name="name">Milo Listo para Tomar</field>
+            <field name="parent_id" ref="category_milo"/>
+        </record>
+        <record id="category_milo_cereal" model="product.category">
+            <field name="name">Milo Cereal</field>
+            <field name="parent_id" ref="category_milo"/>
+        </record>
+        <record id="category_milo_galletas" model="product.category">
+            <field name="name">Milo Galletas</field>
+            <field name="parent_id" ref="category_milo"/>
+        </record>
+
+        <!-- ============ MAGGI ============ -->
+        <record id="category_maggi" model="product.category">
+            <field name="name">Maggi</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_maggi_caldos" model="product.category">
+            <field name="name">Caldos</field>
+            <field name="parent_id" ref="category_maggi"/>
+        </record>
+        <record id="category_maggi_sazonadores" model="product.category">
+            <field name="name">Sazonadores</field>
+            <field name="parent_id" ref="category_maggi"/>
+        </record>
+        <record id="category_maggi_sopas" model="product.category">
+            <field name="name">Sopas Instantáneas</field>
+            <field name="parent_id" ref="category_maggi"/>
+        </record>
+        <record id="category_maggi_cremas" model="product.category">
+            <field name="name">Cremas Instantáneas</field>
+            <field name="parent_id" ref="category_maggi"/>
+        </record>
+        <record id="category_maggi_salsas" model="product.category">
+            <field name="name">Salsas</field>
+            <field name="parent_id" ref="category_maggi"/>
+        </record>
+
+        <!-- ============ NESTLÉ ============ -->
+        <record id="category_nestle" model="product.category">
+            <field name="name">Nestlé</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_nestle_lacteos" model="product.category">
             <field name="name">Lácteos</field>
-            <field name="parent_id" ref="category_alimentos"/>
+            <field name="parent_id" ref="category_nestle"/>
         </record>
-
-        <record id="category_dulces" model="product.category">
-            <field name="name">Dulces y chocolates</field>
-            <field name="parent_id" ref="category_alimentos"/>
+        <record id="category_nestle_chocolates" model="product.category">
+            <field name="name">Chocolates</field>
+            <field name="parent_id" ref="category_nestle"/>
         </record>
-
-        <record id="category_cereales" model="product.category">
+        <record id="category_nestle_cereales" model="product.category">
             <field name="name">Cereales</field>
-            <field name="parent_id" ref="category_alimentos"/>
+            <field name="parent_id" ref="category_nestle"/>
+        </record>
+        <record id="category_nestle_nesquik" model="product.category">
+            <field name="name">Nesquik</field>
+            <field name="parent_id" ref="category_nestle"/>
         </record>
 
-        <record id="category_condimentos" model="product.category">
-            <field name="name">Condimentos</field>
+        <!-- ============ KIT KAT ============ -->
+        <record id="category_kitkat" model="product.category">
+            <field name="name">Kit Kat</field>
             <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_kitkat_barra" model="product.category">
+            <field name="name">Barra 41.5g</field>
+            <field name="parent_id" ref="category_kitkat"/>
+        </record>
+        <record id="category_kitkat_mini" model="product.category">
+            <field name="name">Mini Moments</field>
+            <field name="parent_id" ref="category_kitkat"/>
+        </record>
+
+        <!-- ============ NESTUM ============ -->
+        <record id="category_nestum" model="product.category">
+            <field name="name">Nestum</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_nestum_cereal" model="product.category">
+            <field name="name">Cereal Infantil</field>
+            <field name="parent_id" ref="category_nestum"/>
+        </record>
+
+        <!-- ============ RICACAO ============ -->
+        <record id="category_ricacao" model="product.category">
+            <field name="name">Ricacao</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_ricacao_polvo" model="product.category">
+            <field name="name">Cacao en Polvo</field>
+            <field name="parent_id" ref="category_ricacao"/>
+        </record>
+
+        <!-- ============ AMOR ============ -->
+        <record id="category_amor" model="product.category">
+            <field name="name">Amor</field>
+            <field name="parent_id" ref="category_alimentos"/>
+        </record>
+        <record id="category_amor_galletas" model="product.category">
+            <field name="name">Galletas y Wafers</field>
+            <field name="parent_id" ref="category_amor"/>
         </record>
 
     </data>

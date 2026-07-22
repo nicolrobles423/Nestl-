@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Mi Carrito - Catálogo Nestlé{% endblock %}
+
+{% block estilos %}
+        .titulo-seccion {
+            font-size: 1.8em;
+            font-family: 'Fraunces', serif;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+        }
+
+        .tabla-carrito {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .fila-carrito {
+            display: grid;
+            grid-template-columns: 60px 2fr 1fr 1fr 1fr 40px;
+            gap: 10px;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .fila-carrito:last-child {
+            border-bottom: none;
+        }
+
+        .fila-carrito.encabezado {
+            background-color: #f9f5ef;
+            font-weight: 600;
+            color: var(--color-primario);
+            font-size: 0.9em;
+        }
+
+        .imagen-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f0e6d2 0%, #e8dcc8 100%);
+        }
+
+        .imagen-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nombre-item {
+            font-weight: 500;
+        }
+
+        .nombre-item small {
+            color: #999;
+            font-weight: 400;
+        }
+
+        .formulario-cantidad input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .boton-eliminar {
+            background: none;
+            border: none;
+            color: var(--color-agotado);
+            font-size: 1.1em;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .boton-eliminar:hover {
+            color: #96271b;
+        }
+
+        .resumen-carrito {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .boton-vaciar {
+            background: none;
+            border: 1px solid #999;
+            color: #666;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .boton-vaciar:hover {
+            background-color: #eee;
+        }
+
+        .total-carrito {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--color-acento);
+        }
+
+        .acciones-finales {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .boton-seguir,
+        .boton-finalizar {
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .boton-seguir {
+            background-color: white;
+            color: var(--color-primario);
+            border: 1px solid var(--color-primario);
+        }
+
+        .boton-seguir:hover {
+            background-color: #f5f5f5;
+        }
+
+        .boton-finalizar {
+            background-color: var(--color-primario);
+            color: white;
+            flex: 1;
+        }
+
+        .boton-finalizar:hover {
+            background-color: var(--color-primario-oscuro);
+        }
+
+        .carrito-vacio {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .carrito-vacio h3 {
+            font-size: 1.4em;
+            color: var(--color-texto);
+            margin-bottom: 8px;
+        }
+
+        .carrito-vacio p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .fila-carrito {
+                grid-template-columns: 50px 2fr 1fr 1fr;
+            }
+            .fila-carrito span:nth-child(3) {
+                display: none;
+            }
+            .fila-carrito.encabezado span:nth-child(3) {
+                display: none;
+            }
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Mi Carrito</h2>
+
+        {% if items %}
+        <div class="tabla-carrito">
+            <div class="fila-carrito encabezado">
+                <span></span>
+                <span>Producto</span>
+                <span>Precio</span>
+                <span>Cantidad</span>
+                <span>Subtotal</span>
+                <span></span>
+            </div>
+            {% for item in items %}
+            <div class="fila-carrito">
+                <div class="imagen-item">
+                    {% if item.producto.imagen %}
+                    <img src="{% static item.producto.imagen %}" alt="{{ item.producto.name }}">
+                    {% endif %}
+                </div>
+                <span class="nombre-item">
+                    {{ item.producto.name }}
+                    {% if item.producto.marca_id %}<br><small>{{ item.producto.marca_id.1 }}</small>{% endif %}
+                </span>
+                <span>${{ item.producto.list_price }}</span>
+                <span>
+                    <form method="post" action="{% url 'productos:actualizar_carrito' item.producto.id %}" class="formulario-cantidad">
+                        {% csrf_token %}
+                        <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" max="99" onchange="this.form.submit()">
+                    </form>
+                </span>
+                <span>${{ item.subtotal }}</span>
+                <span>
+                    <form method="post" action="{% url 'productos:eliminar_carrito' item.producto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-eliminar" title="Eliminar">✕</button>
+                    </form>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="resumen-carrito">
+            <form method="post" action="{% url 'productos:vaciar_carrito' %}">
+                {% csrf_token %}
+                <button type="submit" class="boton-vaciar">Vaciar carrito</button>
+            </form>
+            <div class="total-carrito">Total: ${{ total }}</div>
+        </div>
+
+        <div class="acciones-finales">
+            <a href="{% url 'productos:catalogo' %}" class="boton-seguir">Seguir comprando</a>
+            <a href="{% url 'productos:checkout' %}" class="boton-finalizar">Finalizar Compra</a>
+        </div>
+
+        {% else %}
+        <div class="carrito-vacio">
+            <h3>Tu carrito está vacío</h3>
+            <p>Agrega productos desde el catálogo para verlos aquí.</p>
+            <a href="{% url 'productos:catalogo' %}" class="boton-seguir">Ir al catálogo</a>
+        </div>
+        {% endif %}
+{% endblock %}

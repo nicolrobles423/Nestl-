@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Error - Catálogo Nestlé{% endblock %}
+
+{% block estilos %}
+        .contenedor-error {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .tarjeta-error {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 50px 30px;
+        }
+
+        .mensaje-error {
+            font-size: 1.3em;
+            color: var(--color-texto);
+            margin-bottom: 25px;
+        }
+
+        .enlace-volver {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: var(--color-primario);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .enlace-volver:hover {
+            background-color: var(--color-primario-oscuro);
+        }
+{% endblock %}
+
+{% block contenido %}
+        <div class="contenedor-error">
+            <div class="tarjeta-error">
+                <p class="mensaje-error">{{ mensaje }}</p>
+                <a class="enlace-volver" href="{% url 'productos:catalogo' %}">Volver al catálogo</a>
+            </div>
+        </div>
+{% endblock %}

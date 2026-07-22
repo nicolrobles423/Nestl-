@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista lista de pedidos -->
+    <record id="vista_pedidos_lista" model="ir.ui.view">
+        <field name="name">Pedidos - Vista Lista</field>
+        <field name="model">sale.order</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Lista de Pedidos">
+                <field name="name" string="Número Pedido" />
+                <field name="partner_id" string="Cliente" />
+                <field name="date_order" string="Fecha Pedido" />
+                <field name="amount_total" string="Total (USD)" />
+                <field name="state" string="Estado" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulario de pedidos -->
+    <record id="vista_pedidos_formulario" model="ir.ui.view">
+        <field name="name">Pedidos - Vista Formulario</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Pedido de Venta">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirmar Pedido" class="oe_highlight" invisible="state != 'draft'" />
+                    <button name="action_cancel" type="object" string="Cancelar Pedido" invisible="state == 'cancel'" />
+                    <field name="state" widget="statusbar" nolabel="1" />
+                </header>
+
+                <sheet>
+                    <notebook>
+                        <!-- Pestaña 1: Información del pedido -->
+                        <page string="Información del Pedido">
+                            <group>
+                                <group>
+                                    <field name="name" string="Número de Pedido" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="date_order" string="Fecha del Pedido" />
+                                </group>
+                            </group>
+
+                            <group>
+                                <group>
+                                    <field name="partner_id" string="Cliente" required="1" />
+                                </group>
+                                <group>
+                                    <field name="user_id" string="Vendedor" />
+                                </group>
+                            </group>
+
+                            <group string="Dirección de Envío">
+                                <field name="partner_shipping_id" string="Dirección" />
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 2: Líneas de productos -->
+                        <page string="Productos">
+                            <field name="order_line" string="Líneas de Pedido">
+                                <list editable="bottom">
+                                    <field name="product_id" string="Producto" required="1" />
+                                    <field name="product_uom_qty" string="Cantidad" />
+                                    <field name="price_unit" string="Precio Unitario" />
+                                    <field name="price_subtotal" string="Subtotal" />
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Pestaña 3: Totales y notas -->
+                        <page string="Totales">
+                            <group>
+                                <group>
+                                    <field name="amount_untaxed" string="Subtotal" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="amount_tax" string="Impuestos" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group>
+                                <group>
+                                    <field name="amount_total" string="Total" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group string="Notas">
+                                <field name="note" string="Notas del Pedido" nolabel="1" rows="5" />
+                            </group>
+                        </page>
+
+                        <!-- Pestaña 4: Auditoría -->
+                        <page string="Información Adicional" groups="base.group_no_one">
+                            <group string="Auditoría">
+                                <group>
+                                    <field name="create_uid" string="Creado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="create_date" string="Fecha de Creación" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group string="Última Modificación">
+                                <group>
+                                    <field name="write_uid" string="Modificado por" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="write_date" string="Fecha de Modificación" readonly="1" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda -->
+    <record id="vista_pedidos_busqueda" model="ir.ui.view">
+        <field name="name">Pedidos - Vista de Búsqueda</field>
+        <field name="model">sale.order</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Pedidos">
+                <field name="name" string="Número de Pedido" />
+                <field name="partner_id" string="Cliente" />
+
+                <separator />
+
+                <filter name="pedidos_borrador" string="Borradores" domain="[('state', '=', 'draft')]" />
+                <filter name="pedidos_confirmados" string="Confirmados" domain="[('state', '=', 'sale')]" />
+                <filter name="pedidos_bloqueados" string="Bloqueados" domain="[('locked', '=', True)]" />
+                <filter name="pedidos_cancelados" string="Cancelados" domain="[('state', '=', 'cancel')]" />
+
+                <separator />
+
+                <group expand="0" string="Agrupar por...">
+                    <filter name="agrupar_cliente" string="Cliente" context="{'group_by': 'partner_id'}" />
+                    <filter name="agrupar_estado" string="Estado" context="{'group_by': 'state'}" />
+                    <filter name="agrupar_fecha" string="Fecha" context="{'group_by': 'date_order'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción de ventana para abrir pedidos -->
+    <record id="accion_pedidos" model="ir.actions.act_window">
+        <field name="name">Pedidos</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="vista_pedidos_lista" />
+        <field name="help">Gestión de pedidos de venta de clientes Nestlé.</field>
+    </record>
+
+</odoo>
