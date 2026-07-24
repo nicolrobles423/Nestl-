@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -124,26 +125,17 @@
             gap: 12px;
         }
 
-        .marca-logo {
-            width: 36px;
-            height: 36px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-primario), var(--color-primario-oscuro));
-            border: 2px solid rgba(var(--color-primario-rgb), 0.3);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.1em;
+        .logo-nestle-img {
+            height: 34px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.4));
         }
 
         header h1 {
-            font-size: 1.5em;
-            letter-spacing: -0.01em;
-            color: white;
+            display: flex;
+            align-items: center;
+            margin: 0;
         }
 
         .enlace-carrito {
@@ -551,14 +543,8 @@
             margin-bottom: 12px;
         }
 
-        .footer-marca .marca-logo {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .footer-marca span {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            color: white;
+        .footer-logo-img {
+            height: 30px;
         }
 
         .footer-columna p {
@@ -834,8 +820,7 @@
     <header>
         <div class="header-superior">
             <a href="{% url 'productos:catalogo' %}" class="titulo-header">
-                <span class="marca-logo">N</span>
-                <h1>Nestlé</h1>
+                <h1><img src="{% static 'marca/nestle_logo.svg' %}" alt="Nestlé" class="logo-nestle-img"></h1>
             </a>
             <button type="button" class="boton-hamburguesa" onclick="alternarMenuMovil()" aria-label="Abrir menú">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -925,8 +910,7 @@
         <div class="footer-contenido">
             <div class="footer-columna">
                 <div class="footer-marca">
-                    <span class="marca-logo">N</span>
-                    <span>Nestlé</span>
+                    <img src="{% static 'marca/nestle_logo.svg' %}" alt="Nestlé" class="logo-nestle-img footer-logo-img">
                 </div>
                 <p>Proyecto de e-commerce académico para explorar y gestionar el catálogo de productos Nestlé en Ecuador, con panel de administración e inventario integrados a Odoo.</p>
             </div>
