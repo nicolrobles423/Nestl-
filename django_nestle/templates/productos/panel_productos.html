@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Panel de Productos - Nestlé{% endblock %}
+
+{% block estilos %}
+        .encabezado-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .encabezado-panel .titulo-seccion {
+            margin-bottom: 0;
+        }
+
+        .tabla-panel {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            overflow: hidden;
+        }
+
+        .fila-panel {
+            display: grid;
+            grid-template-columns: 2.2fr 1.2fr 1.2fr 0.8fr 0.8fr 0.9fr 1.6fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        .fila-panel:last-child {
+            border-bottom: none;
+        }
+
+        .fila-panel.encabezado {
+            background-color: var(--color-fondo);
+            font-weight: 600;
+            color: var(--color-secundario);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .fila-panel:not(.encabezado):hover {
+            background-color: #F1F4F7;
+        }
+
+        .nombre-panel small {
+            display: block;
+            color: var(--color-texto-suave);
+            font-weight: 400;
+        }
+
+        .estado-panel {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.82em;
+            font-weight: 600;
+        }
+
+        .estado-panel.activo {
+            background-color: #EEF3E2;
+            color: var(--color-disponible);
+        }
+
+        .estado-panel.inactivo {
+            background-color: #EDEFF2;
+            color: var(--color-texto-suave);
+        }
+
+        .acciones-panel {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .acciones-panel a,
+        .acciones-panel button {
+            padding: 7px 14px;
+            font-size: 0.82em;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .accion-editar {
+            background-color: var(--color-superficie);
+            color: var(--color-secundario);
+            border: 1.5px solid var(--color-primario) !important;
+        }
+
+        .accion-archivar {
+            background-color: #EDEFF2;
+            color: var(--color-texto-suave);
+        }
+
+        .accion-eliminar {
+            background-color: #FBEAE8;
+            color: var(--color-agotado);
+        }
+
+        .sin-productos-panel {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--color-texto-suave);
+        }
+
+        @media (max-width: 900px) {
+            .fila-panel {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .fila-panel.encabezado {
+                display: none;
+            }
+            .fila-panel {
+                border: 1.5px solid var(--color-borde);
+                border-radius: var(--radio-sm);
+                margin: 10px;
+            }
+        }
+{% endblock %}
+
+{% block contenido %}
+        <div class="encabezado-panel">
+            <h2 class="titulo-seccion">Panel de Productos</h2>
+            <a href="{% url 'productos:panel_producto_nuevo' %}" class="boton-finalizar">+ Nuevo producto</a>
+        </div>
+
+        {% if productos %}
+        <div class="tabla-panel">
+            <div class="fila-panel encabezado">
+                <span>Producto</span>
+                <span>Marca</span>
+                <span>Categoría</span>
+                <span>Precio</span>
+                <span>Stock</span>
+                <span>Estado</span>
+                <span>Acciones</span>
+            </div>
+            {% for producto in productos %}
+            <div class="fila-panel">
+                <span class="nombre-panel">
+                    {{ producto.name }}
+                    {% if producto.default_code %}<small>{{ producto.default_code }}</small>{% endif %}
+                </span>
+                <span>{% if producto.marca_id %}{{ producto.marca_id.1 }}{% else %}—{% endif %}</span>
+                <span>{% if producto.categ_id %}{{ producto.categ_id.1 }}{% else %}—{% endif %}</span>
+                <span>${{ producto.list_price }}</span>
+                <span>{{ producto.qty_available|floatformat:0 }}</span>
+                <span>
+                    {% if producto.active %}
+                    <span class="estado-panel activo">Activo</span>
+                    {% else %}
+                    <span class="estado-panel inactivo">Inactivo</span>
+                    {% endif %}
+                </span>
+                <span class="acciones-panel">
+                    <a href="{% url 'productos:panel_producto_editar' producto.id %}" class="accion-editar">Editar</a>
+                    <form method="post" action="{% url 'productos:panel_producto_archivar' producto.id %}">
+                        {% csrf_token %}
+                        {% if producto.active %}
+                        <input type="hidden" name="accion" value="desactivar">
+                        <button type="submit" class="accion-archivar">Desactivar</button>
+                        {% else %}
+                        <input type="hidden" name="accion" value="activar">
+                        <button type="submit" class="accion-archivar">Activar</button>
+                        {% endif %}
+                    </form>
+                    <form method="post" action="{% url 'productos:panel_producto_eliminar' producto.id %}" onsubmit="return confirm('¿Eliminar «{{ producto.name }}» definitivamente?');">
+                        {% csrf_token %}
+                        <button type="submit" class="accion-eliminar">Eliminar</button>
+                    </form>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="sin-productos-panel">
+            <h3>Todavía no hay productos</h3>
+            <p>Crea el primero con el botón de arriba.</p>
+        </div>
+        {% endif %}
+{% endblock %}

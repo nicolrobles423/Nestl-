@@ -98,6 +98,11 @@ MEDIA_ROOT = os.path.join(RUTA_BASE, 'media')
 # Tipo de campo de clave primaria por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# A dónde mandar a un usuario no autenticado que intenta entrar a una vista
+# protegida con @login_required (nuestra página de login vive en /login/, no
+# en la ruta por defecto /accounts/login/ que Django usaría sin esto)
+LOGIN_URL = 'productos:login'
+
 # ============================================
 # CONFIGURACIÓN DE CONEXIÓN A ODOO
 # ============================================

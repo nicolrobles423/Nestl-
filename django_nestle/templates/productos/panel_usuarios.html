@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Panel de Usuarios - Nestlé{% endblock %}
+
+{% block estilos %}
+        .tabla-panel {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            overflow: hidden;
+        }
+
+        .fila-panel {
+            display: grid;
+            grid-template-columns: 1.8fr 1.6fr 1fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        .usuario-con-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-usuario {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primario), var(--color-primario-oscuro));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .etiqueta-rol {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.78em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 6px;
+        }
+
+        .etiqueta-rol.administrador {
+            background-color: #FBE1E5;
+            color: var(--color-primario-oscuro);
+        }
+
+        .etiqueta-rol.bodeguero {
+            background-color: #FCEFE1;
+            color: var(--color-bajo);
+        }
+
+        .etiqueta-rol.cliente {
+            background-color: #EEF3E2;
+            color: var(--color-disponible);
+        }
+
+        .fila-panel:last-child {
+            border-bottom: none;
+        }
+
+        .fila-panel.encabezado {
+            background-color: var(--color-fondo);
+            font-weight: 600;
+            color: var(--color-secundario);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .fila-panel:not(.encabezado):hover {
+            background-color: #F1F4F7;
+        }
+
+        .selector-rol {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .selector-rol select {
+            padding: 8px 10px;
+            border: 1.5px solid var(--color-borde);
+            border-radius: var(--radio-sm);
+            font-family: inherit;
+            background: var(--color-superficie);
+        }
+
+        .sin-usuarios-panel {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--color-texto-suave);
+        }
+
+        @media (max-width: 900px) {
+            .fila-panel {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .fila-panel.encabezado {
+                display: none;
+            }
+            .fila-panel {
+                border: 1.5px solid var(--color-borde);
+                border-radius: var(--radio-sm);
+                margin: 10px;
+            }
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Panel de Usuarios</h2>
+
+        {% if perfiles %}
+        <div class="tabla-panel">
+            <div class="fila-panel encabezado">
+                <span>Usuario</span>
+                <span>Correo</span>
+                <span>Rol</span>
+            </div>
+            {% for perfil in perfiles %}
+            <div class="fila-panel">
+                <span class="usuario-con-avatar">
+                    <span class="avatar-usuario">{{ perfil.usuario.first_name|default:perfil.usuario.username|first|upper }}</span>
+                    {{ perfil.usuario.first_name|default:perfil.usuario.username }}
+                </span>
+                <span>{{ perfil.usuario.email }}</span>
+                <span class="selector-rol">
+                    <span class="etiqueta-rol {{ perfil.rol }}">{{ perfil.get_rol_display }}</span>
+                    <form method="post" action="{% url 'productos:panel_usuario_cambiar_rol' perfil.id %}">
+                        {% csrf_token %}
+                        <select name="rol" onchange="this.form.submit()">
+                            {% for valor, etiqueta in roles_disponibles %}
+                            <option value="{{ valor }}" {% if valor == perfil.rol %}selected{% endif %}>{{ etiqueta }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="sin-usuarios-panel">
+            <h3>Todavía no hay usuarios registrados</h3>
+        </div>
+        {% endif %}
+{% endblock %}

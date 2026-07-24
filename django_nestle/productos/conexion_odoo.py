@@ -1,4 +1,5 @@
 import xmlrpc.client
+from decimal import ROUND_HALF_UP, Decimal
 from django.conf import settings
 from .imagenes_marca import imagen_para_producto
 
@@ -77,7 +78,7 @@ class OdooConexion:
                     {
                         'fields': ['id', 'name', 'list_price', 'standard_price',
                                   'marca_id', 'categ_id', 'qty_available',
-                                  'description_sale', 'default_code']
+                                  'description_sale', 'default_code', 'active', 'taxes_id']
                     }
                 )
                 for producto in productos:
@@ -106,7 +107,7 @@ class OdooConexion:
                 {
                     'fields': ['id', 'name', 'list_price', 'standard_price',
                               'marca_id', 'categ_id', 'qty_available',
-                              'description_sale', 'default_code']
+                              'description_sale', 'default_code', 'active']
                 }
             )
             producto = producto[0] if producto else None
@@ -280,6 +281,322 @@ class OdooConexion:
             print(f"Error al traer variantes de producto: {excepcion}")
             return {}
 
+    def crear_producto(self, datos):
+        """
+        Me creo un producto nuevo (product.template) en Odoo.
+        'datos' es un dict con los campos a guardar (name, list_price, etc.).
+        Retorno el ID del producto creado, o None si falla.
+        """
+        try:
+            datos = dict(datos)
+            datos.setdefault('type', 'consu')
+            datos.setdefault('is_storable', True)
+            return self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'product.template',
+                'create',
+                [datos]
+            )
+        except Exception as excepcion:
+            print(f"Error al crear producto: {excepcion}")
+            raise
+
+    def actualizar_producto(self, id_producto, datos):
+        """
+        Me actualizo los campos de un producto existente.
+        Retorno True si se guardó correctamente.
+        """
+        try:
+            return self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'product.template',
+                'write',
+                [[id_producto], datos]
+            )
+        except Exception as excepcion:
+            print(f"Error al actualizar producto: {excepcion}")
+            raise
+
+    def eliminar_producto(self, id_producto):
+        """
+        Me elimino un producto de Odoo. Si el producto ya tiene movimientos
+        (ventas, stock, etc.) Odoo no lo deja borrar; en ese caso propago el
+        error para que la vista le explique al administrador que debe
+        desactivarlo en lugar de eliminarlo.
+        """
+        return self.proxy_objetos.execute_kw(
+            self.base_datos,
+            self.uid,
+            self.contrasena_admin,
+            'product.template',
+            'unlink',
+            [[id_producto]]
+        )
+
+    def _ubicacion_stock_principal(self):
+        """Ubicación interna del almacén principal (normalmente 'WH/Stock'),
+        donde guardo los ajustes de inventario que hace el bodeguero."""
+        ids_almacen = self.proxy_objetos.execute_kw(
+            self.base_datos, self.uid, self.contrasena_admin,
+            'stock.warehouse', 'search', [[]], {'limit': 1}
+        )
+        if not ids_almacen:
+            return None
+        almacenes = self.proxy_objetos.execute_kw(
+            self.base_datos, self.uid, self.contrasena_admin,
+            'stock.warehouse', 'read', [ids_almacen], {'fields': ['lot_stock_id']}
+        )
+        lot_stock_id = almacenes[0].get('lot_stock_id') if almacenes else None
+        return lot_stock_id[0] if lot_stock_id else None
+
+    def ajustar_stock(self, id_producto_template, nueva_cantidad):
+        """
+        Ajusto la cantidad disponible ('qty_available') de un producto a
+        'nueva_cantidad', usando el mecanismo real de ajuste de inventario de
+        Odoo (stock.quant + action_apply_inventory) sobre la ubicación
+        principal del almacén. Si el producto todavía no rastrea inventario
+        (is_storable=False, el caso de los productos creados antes de esta
+        función), lo activo primero.
+        """
+        ids_variante = self.proxy_objetos.execute_kw(
+            self.base_datos, self.uid, self.contrasena_admin,
+            'product.product', 'search',
+            [[('product_tmpl_id', '=', id_producto_template)]], {'limit': 1}
+        )
+        if not ids_variante:
+            raise ValueError('El producto no tiene una variante para ajustar stock.')
+        id_variante = ids_variante[0]
+
+        self.proxy_objetos.execute_kw(
+            self.base_datos, self.uid, self.contrasena_admin,
+            'product.template', 'write', [[id_producto_template], {'is_storable': True}]
+        )
+
+        id_ubicacion = self._ubicacion_stock_principal()
+        if not id_ubicacion:
+            raise ValueError('No se encontró una ubicación de almacén para ajustar el stock.')
+
+        ids_quant = self.proxy_objetos.execute_kw(
+            self.base_datos, self.uid, self.contrasena_admin,
+            'stock.quant', 'search',
+            [[('product_id', '=', id_variante), ('location_id', '=', id_ubicacion)]], {'limit': 1}
+        )
+
+        if ids_quant:
+            id_quant = ids_quant[0]
+            self.proxy_objetos.execute_kw(
+                self.base_datos, self.uid, self.contrasena_admin,
+                'stock.quant', 'write',
+                [[id_quant], {'inventory_quantity': nueva_cantidad, 'inventory_quantity_set': True}]
+            )
+        else:
+            id_quant = self.proxy_objetos.execute_kw(
+                self.base_datos, self.uid, self.contrasena_admin,
+                'stock.quant', 'create',
+                [{
+                    'product_id': id_variante,
+                    'location_id': id_ubicacion,
+                    'inventory_quantity': nueva_cantidad,
+                    'inventory_quantity_set': True,
+                }]
+            )
+
+        try:
+            self.proxy_objetos.execute_kw(
+                self.base_datos, self.uid, self.contrasena_admin,
+                'stock.quant', 'action_apply_inventory', [[id_quant]]
+            )
+        except xmlrpc.client.Fault as excepcion:
+            # action_apply_inventory no retorna nada; Odoo falla al serializar
+            # ese None por XML-RPC, pero el ajuste ya quedó aplicado en el
+            # servidor (verificado: qty_available se actualiza igual).
+            if 'cannot marshal None' not in str(excepcion):
+                raise
+
+        return True
+
+    def obtener_impuestos(self, ids_impuestos):
+        """Me traigo los impuestos (account.tax) indicados, para poder calcular
+        cuánto IVA le corresponde a cada línea del carrito."""
+        if not ids_impuestos:
+            return []
+        try:
+            return self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'account.tax',
+                'read',
+                [list(ids_impuestos)],
+                {'fields': ['id', 'amount', 'amount_type', 'price_include_override']}
+            )
+        except Exception as excepcion:
+            print(f"Error al traer impuestos: {excepcion}")
+            return []
+
+    def calcular_totales_con_impuestos(self, productos_con_cantidad):
+        """
+        Calculo el subtotal, el IVA y el total (subtotal + IVA) de una lista
+        de líneas [(producto, cantidad), ...], usando los impuestos
+        ('taxes_id') configurados en cada producto en Odoo. Así el total que
+        se ve en el carrito coincide con el que Odoo cobra de verdad.
+        Retorno (subtotal, impuestos, total), los tres redondeados a 2 decimales.
+        """
+        ids_impuestos = set()
+        for producto, _ in productos_con_cantidad:
+            ids_impuestos.update(producto.get('taxes_id') or [])
+
+        impuestos_por_id = {impuesto['id']: impuesto for impuesto in self.obtener_impuestos(ids_impuestos)}
+
+        # Uso Decimal en toda la cuenta (no float) para no arrastrar errores de
+        # precisión (p. ej. 28.5 * 0.15 en float da 4.2749999999999995 en vez
+        # de 4.275), y redondeo el impuesto de cada línea antes de sumar,
+        # igual que hace Odoo internamente.
+        dos_decimales = Decimal('0.01')
+        subtotal = Decimal('0')
+        total_impuestos = Decimal('0')
+        for producto, cantidad in productos_con_cantidad:
+            precio_linea = Decimal(str(producto['list_price'])) * Decimal(cantidad)
+            subtotal += precio_linea
+            for id_impuesto in (producto.get('taxes_id') or []):
+                impuesto = impuestos_por_id.get(id_impuesto)
+                # Solo sé calcular impuestos de tipo "porcentaje" que no vengan
+                # ya incluidos en el precio (el caso configurado en este proyecto).
+                if impuesto and impuesto['amount_type'] == 'percent' and impuesto.get('price_include_override') != 'always':
+                    porcentaje = Decimal(str(impuesto['amount'])) / Decimal('100')
+                    total_impuestos += (precio_linea * porcentaje).quantize(dos_decimales, rounding=ROUND_HALF_UP)
+
+        subtotal = subtotal.quantize(dos_decimales, rounding=ROUND_HALF_UP)
+        total_impuestos = total_impuestos.quantize(dos_decimales, rounding=ROUND_HALF_UP)
+        total = (subtotal + total_impuestos).quantize(dos_decimales, rounding=ROUND_HALF_UP)
+        return float(subtotal), float(total_impuestos), float(total)
+
+    def obtener_pedidos_por_cliente(self, id_partner):
+        """
+        Me traigo el historial de pedidos (sale.order) de un cliente,
+        del más reciente al más antiguo. Lo uso para "Mis pedidos".
+        """
+        try:
+            ids_pedidos = self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'sale.order',
+                'search',
+                [[('partner_id', '=', id_partner)]],
+                {'order': 'date_order desc'}
+            )
+
+            if not ids_pedidos:
+                return []
+
+            return self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'sale.order',
+                'read',
+                [ids_pedidos],
+                {'fields': ['id', 'name', 'date_order', 'amount_total', 'state']}
+            )
+
+        except Exception as excepcion:
+            print(f"Error al traer pedidos del cliente: {excepcion}")
+            return []
+
+    def obtener_todos_los_pedidos(self):
+        """
+        Me traigo TODOS los pedidos (sale.order) del sistema, sin filtrar por
+        cliente, del más reciente al más antiguo. Lo usa el administrador en
+        el panel de pedidos.
+        """
+        try:
+            ids_pedidos = self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'sale.order',
+                'search',
+                [[]],
+                {'order': 'date_order desc'}
+            )
+
+            if not ids_pedidos:
+                return []
+
+            return self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'sale.order',
+                'read',
+                [ids_pedidos],
+                {'fields': ['id', 'name', 'partner_id', 'date_order', 'amount_total', 'state']}
+            )
+
+        except Exception as excepcion:
+            print(f"Error al traer todos los pedidos: {excepcion}")
+            return []
+
+    def obtener_pedido_con_lineas(self, id_pedido):
+        """
+        Me traigo un pedido (sale.order) completo: sus datos, los del
+        cliente (res.partner) y el detalle de líneas (producto, cantidad,
+        precio). Lo uso para regenerar una factura si el PDF ya no existe
+        en disco.
+        Retorno None si el pedido no existe.
+        """
+        try:
+            pedidos = self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'sale.order',
+                'read',
+                [[id_pedido]],
+                {'fields': ['id', 'name', 'date_order', 'amount_total', 'partner_id', 'order_line']}
+            )
+            if not pedidos:
+                return None
+            pedido = pedidos[0]
+
+            cliente = self.proxy_objetos.execute_kw(
+                self.base_datos,
+                self.uid,
+                self.contrasena_admin,
+                'res.partner',
+                'read',
+                [[pedido['partner_id'][0]]],
+                {'fields': ['id', 'name', 'email', 'phone']}
+            )
+            pedido['cliente'] = cliente[0] if cliente else None
+
+            ids_lineas = pedido.get('order_line') or []
+            lineas = []
+            if ids_lineas:
+                lineas = self.proxy_objetos.execute_kw(
+                    self.base_datos,
+                    self.uid,
+                    self.contrasena_admin,
+                    'sale.order.line',
+                    'read',
+                    [ids_lineas],
+                    {'fields': ['product_id', 'product_uom_qty', 'price_unit', 'price_subtotal', 'display_type']}
+                )
+                # Descarto líneas de sección/nota (display_type no vacío), que no son productos reales
+                lineas = [linea for linea in lineas if not linea.get('display_type')]
+            pedido['lineas'] = lineas
+
+            return pedido
+
+        except Exception as excepcion:
+            print(f"Error al traer el pedido con líneas: {excepcion}")
+            return None
+
     def crear_pedido(self, id_partner, items_carrito):
         """
         Me creo un pedido de venta (sale.order) en Odoo con las líneas del carrito.
@@ -319,7 +636,7 @@ class OdooConexion:
                 'sale.order',
                 'read',
                 [[id_pedido]],
-                {'fields': ['id', 'name', 'amount_total']}
+                {'fields': ['id', 'name', 'amount_total', 'date_order']}
             )
             return pedido[0] if pedido else None
 

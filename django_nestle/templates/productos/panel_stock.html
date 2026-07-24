@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Panel de Stock - Nestlé{% endblock %}
+
+{% block estilos %}
+        .tabla-panel {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            overflow: hidden;
+        }
+
+        .fila-panel {
+            display: grid;
+            grid-template-columns: 2.2fr 1.2fr 1fr 1.6fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        .fila-panel:last-child {
+            border-bottom: none;
+        }
+
+        .fila-panel.encabezado {
+            background-color: var(--color-fondo);
+            font-weight: 600;
+            color: var(--color-secundario);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .fila-panel:not(.encabezado):hover {
+            background-color: #F1F4F7;
+        }
+
+        .fila-panel.stock-bajo {
+            background-color: #FFF9F0;
+            border-left: 4px solid var(--color-bajo);
+        }
+
+        .fila-panel.stock-agotado {
+            background-color: #FDF3F2;
+            border-left: 4px solid var(--color-agotado);
+        }
+
+        .nombre-panel small {
+            display: block;
+            color: var(--color-texto-suave);
+            font-weight: 400;
+        }
+
+        .celda-stock {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .celda-stock .cantidad-stock {
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .barra-stock-fondo {
+            width: 100%;
+            max-width: 130px;
+            height: 7px;
+            border-radius: 999px;
+            background: var(--color-borde);
+            overflow: hidden;
+        }
+
+        .barra-stock-relleno {
+            height: 100%;
+            border-radius: 999px;
+            background: var(--color-disponible);
+            max-width: 100%;
+        }
+
+        .stock-bajo .barra-stock-relleno {
+            background: var(--color-bajo);
+        }
+
+        .stock-agotado .barra-stock-relleno {
+            background: var(--color-agotado);
+        }
+
+        .etiqueta-stock-bajo {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--color-bajo);
+        }
+
+        .etiqueta-stock-agotado {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: var(--color-agotado);
+        }
+
+        .formulario-stock {
+            display: flex;
+            gap: 8px;
+        }
+
+        .formulario-stock input {
+            width: 90px;
+            padding: 8px;
+            border: 1.5px solid var(--color-borde);
+            border-radius: var(--radio-sm);
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .formulario-stock button {
+            padding: 7px 14px;
+            font-size: 0.85em;
+            border-radius: 999px;
+            border: 1.5px solid var(--color-primario);
+            background: var(--color-superficie);
+            color: var(--color-secundario);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .sin-productos-panel {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--color-texto-suave);
+        }
+
+        @media (max-width: 900px) {
+            .fila-panel {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .fila-panel.encabezado {
+                display: none;
+            }
+            .fila-panel {
+                border: 1.5px solid var(--color-borde);
+                border-radius: var(--radio-sm);
+                margin: 10px;
+            }
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Panel de Stock</h2>
+
+        {% if productos %}
+        <div class="tabla-panel">
+            <div class="fila-panel encabezado">
+                <span>Producto</span>
+                <span>Marca</span>
+                <span>Stock actual</span>
+                <span>Ajustar</span>
+            </div>
+            {% for producto in productos %}
+            <div class="fila-panel {% if producto.qty_available <= 0 %}stock-agotado{% elif producto.qty_available <= 10 %}stock-bajo{% endif %}">
+                <span class="nombre-panel">
+                    {{ producto.name }}
+                    {% if producto.default_code %}<small>{{ producto.default_code }}</small>{% endif %}
+                </span>
+                <span>{% if producto.marca_id %}{{ producto.marca_id.1 }}{% else %}—{% endif %}</span>
+                <span class="celda-stock">
+                    <span class="cantidad-stock">{{ producto.qty_available|floatformat:0 }}</span>
+                    <span class="barra-stock-fondo">
+                        <span class="barra-stock-relleno" style="width: {% widthratio producto.qty_available 150 100 %}%;"></span>
+                    </span>
+                    {% if producto.qty_available <= 0 %}
+                        <span class="etiqueta-stock-agotado">⛔ Agotado</span>
+                    {% elif producto.qty_available <= 10 %}
+                        <span class="etiqueta-stock-bajo">⚠ Poco stock</span>
+                    {% endif %}
+                </span>
+                <span>
+                    <form method="post" action="{% url 'productos:panel_stock_ajustar' producto.id %}" class="formulario-stock">
+                        {% csrf_token %}
+                        <input type="number" name="cantidad" value="{{ producto.qty_available|floatformat:0 }}" min="0" step="1">
+                        <button type="submit">Guardar</button>
+                    </form>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="sin-productos-panel">
+            <h3>Todavía no hay productos</h3>
+        </div>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Panel de Pedidos - Nestlé{% endblock %}
+
+{% block estilos %}
+        .tabla-panel {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            overflow: hidden;
+        }
+
+        .fila-panel {
+            display: grid;
+            grid-template-columns: 1.2fr 1.6fr 1.2fr 1fr 1fr 1fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+
+        .fila-panel:last-child {
+            border-bottom: none;
+        }
+
+        .fila-panel.encabezado {
+            background-color: var(--color-fondo);
+            font-weight: 600;
+            color: var(--color-secundario);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .fila-panel:not(.encabezado):hover {
+            background-color: #F1F4F7;
+        }
+
+        .estado-pedido {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.82em;
+            font-weight: 600;
+            background-color: #EEF3E2;
+            color: var(--color-disponible);
+        }
+
+        .sin-pedidos-panel {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--color-texto-suave);
+        }
+
+        @media (max-width: 900px) {
+            .fila-panel {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .fila-panel.encabezado {
+                display: none;
+            }
+            .fila-panel {
+                border: 1.5px solid var(--color-borde);
+                border-radius: var(--radio-sm);
+                margin: 10px;
+            }
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Panel de Pedidos</h2>
+
+        {% if pedidos %}
+        <div class="tabla-panel">
+            <div class="fila-panel encabezado">
+                <span>Pedido</span>
+                <span>Cliente</span>
+                <span>Fecha</span>
+                <span>Total</span>
+                <span>Estado</span>
+                <span>Factura</span>
+            </div>
+            {% for pedido in pedidos %}
+            <div class="fila-panel">
+                <span>{{ pedido.name }}</span>
+                <span>{% if pedido.partner_id %}{{ pedido.partner_id.1 }}{% else %}—{% endif %}</span>
+                <span>{{ pedido.date_order|default:'—' }}</span>
+                <span>${{ pedido.amount_total }}</span>
+                <span><span class="estado-pedido">{{ pedido.state }}</span></span>
+                <span>
+                    <a href="{% url 'productos:descargar_factura' pedido.id %}" class="boton-seguir">Descargar PDF</a>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="sin-pedidos-panel">
+            <h3>Todavía no hay pedidos</h3>
+            <p>Cuando algún cliente complete una compra, aparecerá aquí.</p>
+        </div>
+        {% endif %}
+{% endblock %}

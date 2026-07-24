@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Panel Administrativo - Nestlé{% endblock %}
+
+{% block estilos %}
+        .estadisticas-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-left: 4px solid var(--color-primario);
+        }
+
+        .stat-card.acento { border-left-color: var(--color-acento); }
+        .stat-card.disponible { border-left-color: var(--color-disponible); }
+
+        .stat-card .stat-icono {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--color-fondo);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+        }
+
+        .stat-card .stat-valor {
+            font-size: 1.7em;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-texto);
+            line-height: 1.1;
+        }
+
+        .stat-card .stat-etiqueta {
+            font-size: 0.85em;
+            color: var(--color-texto-suave);
+            font-weight: 500;
+        }
+
+        .tarjetas-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .tarjeta-panel-inicio {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--color-texto);
+            border: 1.5px solid var(--color-borde);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .tarjeta-panel-inicio:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--sombra-media);
+        }
+
+        .tarjeta-panel-inicio .icono-panel {
+            font-size: 1.8em;
+            margin-bottom: 4px;
+        }
+
+        .tarjeta-panel-inicio h3 {
+            margin: 0;
+            color: var(--color-secundario);
+        }
+
+        .tarjeta-panel-inicio p {
+            margin: 0;
+            color: var(--color-texto-suave);
+            font-size: 0.9em;
+        }
+{% endblock %}
+
+{% block contenido %}
+        <h2 class="titulo-seccion">Panel Administrativo</h2>
+        <p style="color: var(--color-texto-suave); margin-top: -12px; margin-bottom: 24px;">
+            Hola, {{ user.first_name|default:user.email }}. Elige qué quieres gestionar.
+        </p>
+
+        <div class="estadisticas-panel">
+            <div class="stat-card">
+                <span class="stat-icono">📦</span>
+                <div>
+                    <div class="stat-valor">{{ total_productos }}</div>
+                    <div class="stat-etiqueta">Productos activos</div>
+                </div>
+            </div>
+            <div class="stat-card acento">
+                <span class="stat-icono">👤</span>
+                <div>
+                    <div class="stat-valor">{{ total_usuarios }}</div>
+                    <div class="stat-etiqueta">Usuarios registrados</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icono">🧾</span>
+                <div>
+                    <div class="stat-valor">{{ total_pedidos }}</div>
+                    <div class="stat-etiqueta">Pedidos realizados</div>
+                </div>
+            </div>
+            <div class="stat-card disponible">
+                <span class="stat-icono">💰</span>
+                <div>
+                    <div class="stat-valor">${{ ventas_totales|floatformat:2 }}</div>
+                    <div class="stat-etiqueta">Ventas totales</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tarjetas-panel">
+            <a href="{% url 'productos:panel_productos' %}" class="tarjeta-panel-inicio">
+                <span class="icono-panel">📦</span>
+                <h3>Productos</h3>
+                <p>Crear, editar, archivar o eliminar productos del catálogo.</p>
+            </a>
+            <a href="{% url 'productos:panel_stock' %}" class="tarjeta-panel-inicio">
+                <span class="icono-panel">📊</span>
+                <h3>Stock</h3>
+                <p>Ver y ajustar el inventario disponible de cada producto.</p>
+            </a>
+            <a href="{% url 'productos:panel_pedidos' %}" class="tarjeta-panel-inicio">
+                <span class="icono-panel">🧾</span>
+                <h3>Pedidos</h3>
+                <p>Ver todos los pedidos del sistema y descargar sus facturas.</p>
+            </a>
+            <a href="{% url 'productos:panel_usuarios' %}" class="tarjeta-panel-inicio">
+                <span class="icono-panel">👤</span>
+                <h3>Usuarios</h3>
+                <p>Ver los usuarios registrados y asignarles un rol.</p>
+            </a>
+        </div>
+{% endblock %}

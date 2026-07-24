@@ -1,25 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block titulo %}{{ producto.name }} - Catálogo Nestlé{% endblock %}
+{% block titulo %}{{ producto.name }} - Nestlé{% endblock %}
 
 {% block estilos %}
-        .enlace-volver {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--color-primario);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .enlace-volver:hover {
-            text-decoration: underline;
-        }
-
         .tarjeta-detalle {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra-suave);
             overflow: hidden;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -33,48 +21,56 @@
 
         .imagen-detalle {
             background: linear-gradient(135deg, #f0e6d2 0%, #e8dcc8 100%);
-            min-height: 250px;
+            min-height: 280px;
+            overflow: hidden;
         }
 
         .imagen-detalle img {
             width: 100%;
             height: 100%;
-            min-height: 250px;
+            min-height: 280px;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .imagen-detalle:hover img {
+            transform: scale(1.05);
         }
 
         .info-detalle {
-            padding: 30px;
+            padding: 36px;
         }
 
         .nombre-detalle {
-            font-size: 1.8em;
-            font-family: 'Fraunces', serif;
+            font-size: 1.9em;
+            font-family: 'Poppins', sans-serif;
             color: var(--color-texto);
             margin-bottom: 10px;
         }
 
         .marca-detalle {
             font-size: 1em;
-            color: var(--color-primario);
-            font-weight: 600;
-            margin-bottom: 5px;
+            color: var(--color-secundario);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 6px;
         }
 
         .categoria-detalle {
             font-size: 0.9em;
-            color: #999;
+            color: var(--color-texto-suave);
             margin-bottom: 15px;
         }
 
         .codigo-detalle {
             font-size: 0.85em;
-            color: #999;
+            color: var(--color-texto-suave);
             margin-bottom: 15px;
         }
 
         .precio-detalle {
-            font-size: 2em;
+            font-size: 2.1em;
             color: var(--color-acento);
             font-weight: 700;
             margin-bottom: 15px;
@@ -82,16 +78,31 @@
 
         .stock-detalle {
             display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 7px 16px;
+            border-radius: 999px;
             font-size: 0.9em;
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .stock-detalle::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            margin-right: 6px;
         }
 
         .stock-detalle.disponible {
             background-color: #EEF3E2;
             color: var(--color-disponible);
+        }
+
+        .stock-detalle.bajo {
+            background-color: #FCEFE1;
+            color: var(--color-bajo);
         }
 
         .stock-detalle.agotado {
@@ -100,44 +111,38 @@
         }
 
         .descripcion-detalle {
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 25px;
+            line-height: 1.65;
+            color: var(--color-texto-suave);
+            margin-bottom: 28px;
         }
 
         .descripcion-detalle h3 {
             font-size: 1.1em;
             color: var(--color-texto);
             margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .formulario-agregar {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
         .formulario-agregar input[type="number"] {
-            width: 70px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            width: 75px;
+            padding: 12px;
+            border: 1.5px solid var(--color-borde);
+            border-radius: var(--radio-sm);
             font-size: 14px;
             text-align: center;
+            font-family: inherit;
         }
 
-        .boton-agregar-carrito {
-            padding: 10px 24px;
-            background-color: var(--color-primario);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .boton-agregar-carrito:hover {
-            background-color: var(--color-primario-oscuro);
+        .formulario-agregar input[type="number"]:focus {
+            outline: none;
+            border-color: var(--color-acento);
+            box-shadow: 0 0 0 4px rgba(var(--color-acento-rgb), 0.2);
         }
 {% endblock %}
 
@@ -167,10 +172,12 @@
 
                 <div class="precio-detalle">${{ producto.list_price }}</div>
 
-                {% if producto.qty_available > 0 %}
-                    <div class="stock-detalle disponible">{{ producto.qty_available }} disponibles</div>
-                {% else %}
+                {% if producto.qty_available <= 0 %}
                     <div class="stock-detalle agotado">Agotado</div>
+                {% elif producto.qty_available <= 5 %}
+                    <div class="stock-detalle bajo">Últimas {{ producto.qty_available|floatformat:0 }} unidades</div>
+                {% else %}
+                    <div class="stock-detalle disponible">{{ producto.qty_available|floatformat:0 }} disponibles</div>
                 {% endif %}
 
                 {% if producto.description_sale %}

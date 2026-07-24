@@ -1,0 +1,83 @@
+{% load static %}
+{% if productos %}
+<h2 class="titulo-seccion">Productos Disponibles ({{ total_productos }})</h2>
+
+<div class="grid-productos">
+    {% for producto in productos %}
+    <div class="tarjeta-producto">
+        <div class="imagen-producto" onclick="irADetalle({{ producto.id }})">
+            {% if producto.imagen %}
+            <img src="{% static producto.imagen %}" alt="{{ producto.name }}">
+            {% endif %}
+        </div>
+        <div class="info-producto">
+            <div onclick="irADetalle({{ producto.id }})">
+                <div class="nombre-producto">{{ producto.name }}</div>
+                <div class="marca-producto">
+                    {% if producto.marca_id %}
+                        {{ producto.marca_id.1 }}
+                    {% endif %}
+                </div>
+                <div class="categoria-producto">
+                    {% if producto.categ_id %}
+                        {{ producto.categ_id.1 }}
+                    {% endif %}
+                </div>
+                <div class="precio">${{ producto.list_price }}</div>
+
+                <!-- Estado del Stock -->
+                {% if producto.qty_available <= 0 %}
+                    <div class="badge-stock agotado">Agotado</div>
+                {% elif producto.qty_available <= 5 %}
+                    <div class="badge-stock bajo">Últimas {{ producto.qty_available|floatformat:0 }} unidades</div>
+                {% else %}
+                    <div class="badge-stock disponible">En stock ({{ producto.qty_available|floatformat:0 }})</div>
+                {% endif %}
+            </div>
+
+            <div class="acciones-producto">
+                <button class="boton-detalle" onclick="irADetalle({{ producto.id }})">Ver Detalle</button>
+                <form method="post" action="{% url 'productos:agregar_carrito' producto.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="cantidad" value="1">
+                    <input type="hidden" name="siguiente" value="{{ request.get_full_path }}">
+                    <button type="submit" class="boton-agregar-carrito">Agregar al carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if productos.paginator.num_pages > 1 %}
+<div class="paginacion">
+    <button
+        type="button"
+        class="boton-pagina"
+        {% if not productos.has_previous %}disabled{% endif %}
+        onclick="irAPagina({% if productos.has_previous %}{{ productos.previous_page_number }}{% else %}1{% endif %})"
+    >&larr; Anterior</button>
+
+    {% for numero in productos.paginator.page_range %}
+        <button
+            type="button"
+            class="boton-pagina numero {% if numero == productos.number %}activa{% endif %}"
+            onclick="irAPagina({{ numero }})"
+        >{{ numero }}</button>
+    {% endfor %}
+
+    <button
+        type="button"
+        class="boton-pagina"
+        {% if not productos.has_next %}disabled{% endif %}
+        onclick="irAPagina({% if productos.has_next %}{{ productos.next_page_number }}{% else %}{{ productos.paginator.num_pages }}{% endif %})"
+    >Siguiente &rarr;</button>
+</div>
+{% endif %}
+
+{% else %}
+<div class="sin-productos">
+    <h3>No hay productos disponibles</h3>
+    <p>Intenta con otros filtros o busca otro término</p>
+</div>
+{% endif %}

@@ -1,0 +1,423 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Nestlé - Bienvenida{% endblock %}
+
+{% block estilos %}
+        .landing-hero {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .landing-hero .titulo-seccion {
+            text-align: center;
+            font-size: 2.4em;
+            margin-bottom: 10px;
+        }
+
+        .landing-hero p {
+            color: var(--color-texto-suave);
+            font-size: 1.05em;
+        }
+
+        .carrusel {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto 44px;
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra-media);
+            background: var(--color-superficie);
+        }
+
+        .carrusel-pista {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .carrusel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .carrusel-imagen {
+            width: 100%;
+            height: 420px;
+            background: linear-gradient(135deg, #f0e6d2 0%, #e8dcc8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 700px) {
+            .carrusel-imagen {
+                height: 300px;
+            }
+        }
+
+        .carrusel-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carrusel-imagen .sin-foto {
+            color: #9a8a75;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .carrusel-info {
+            padding: 26px 28px 30px;
+            text-align: center;
+        }
+
+        .carrusel-info h3 {
+            font-size: 1.5em;
+            color: var(--color-texto);
+            margin-bottom: 8px;
+        }
+
+        .carrusel-info .marca-producto {
+            color: var(--color-secundario);
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 10px;
+        }
+
+        .carrusel-info .precio {
+            color: var(--color-acento);
+            font-weight: 700;
+            font-size: 1.5em;
+        }
+
+        .carrusel-flecha {
+            position: absolute;
+            top: 210px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--color-secundario);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: var(--sombra-suave);
+            transition: transform var(--tiempo-rapido), background var(--transicion), box-shadow var(--transicion);
+        }
+
+        @media (max-width: 700px) {
+            .carrusel-flecha {
+                top: 150px;
+                width: 38px;
+                height: 38px;
+                font-size: 1em;
+            }
+        }
+
+        .carrusel-flecha:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--sombra-media), var(--sombra-resplandor);
+        }
+
+        .carrusel-flecha:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carrusel-anterior { left: 16px; }
+        .carrusel-siguiente { right: 16px; }
+
+        .carrusel-indicadores {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 6px 0 20px;
+        }
+
+        .carrusel-punto {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: var(--color-borde);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: width var(--transicion), background var(--transicion), box-shadow var(--transicion);
+        }
+
+        .carrusel-punto:hover {
+            background: var(--color-acento);
+        }
+
+        .carrusel-punto.activo {
+            width: 26px;
+            background: var(--color-primario);
+            box-shadow: 0 0 0 3px rgba(var(--color-primario-rgb), 0.18);
+        }
+
+        .landing-grid-titulo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .landing-grid-titulo h3 {
+            font-size: 1.7em;
+            color: var(--color-texto);
+            margin-bottom: 6px;
+        }
+
+        .landing-grid-titulo p {
+            color: var(--color-texto-suave);
+        }
+
+        .landing-grid-productos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 900px) {
+            .landing-grid-productos { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 500px) {
+            .landing-grid-productos { grid-template-columns: 1fr; }
+        }
+
+        .grid-producto {
+            background: var(--color-superficie);
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            border: 1.5px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .grid-producto:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-media), 0 0 0 4px rgba(var(--color-acento-rgb), 0.14);
+            border-color: rgba(var(--color-acento-rgb), 0.5);
+        }
+
+        .grid-producto-imagen {
+            width: 100%;
+            height: 190px;
+            background: linear-gradient(135deg, #f0e6d2 0%, #e8dcc8 100%);
+            overflow: hidden;
+        }
+
+        .grid-producto-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .grid-producto:hover .grid-producto-imagen img {
+            transform: scale(1.06);
+        }
+
+        .grid-producto-info {
+            padding: 16px 18px;
+        }
+
+        .grid-producto-info .marca-producto {
+            font-size: 0.78em;
+            color: var(--color-secundario);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 4px;
+        }
+
+        .grid-producto-info h4 {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--color-texto);
+            margin-bottom: 8px;
+        }
+
+        .grid-producto-info .precio {
+            font-size: 1.25em;
+            color: var(--color-acento-oscuro);
+            font-weight: 800;
+        }
+
+        .landing-cta {
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-secundario) 0%, var(--color-secundario-oscuro) 100%);
+            border-radius: var(--radio);
+            padding: 48px 24px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .landing-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.16), transparent 45%);
+        }
+
+        .landing-cta h3 {
+            position: relative;
+            font-size: 1.6em;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .landing-cta p {
+            position: relative;
+            color: rgba(255, 255, 255, 0.88);
+            margin-bottom: 26px;
+        }
+
+        .landing-cta .boton-seguir {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .landing-cta .boton-seguir:hover {
+            background-color: white;
+            color: var(--color-primario);
+        }
+
+        .landing-cta .boton-finalizar {
+            background: white;
+            color: var(--color-primario);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .landing-cta .boton-finalizar:hover {
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+        }
+
+        .botones-cta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+{% endblock %}
+
+{% block contenido %}
+        <section class="landing-hero">
+            <h2 class="titulo-seccion">Descubre nuestros productos</h2>
+            <p>Café, chocolates, lácteos y mucho más de tus marcas Nestlé favoritas.</p>
+        </section>
+
+        {% if productos_carrusel %}
+        <div class="carrusel" id="carrusel">
+            <div class="carrusel-pista" id="carrusel-pista">
+                {% for producto in productos_carrusel %}
+                <div class="carrusel-slide">
+                    <div class="carrusel-imagen">
+                        {% if producto.imagen %}
+                        <img src="{% static producto.imagen %}" alt="{{ producto.name }}">
+                        {% else %}
+                        <span class="sin-foto">{{ producto.name }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="carrusel-info">
+                        <h3>{{ producto.name }}</h3>
+                        {% if producto.marca_id %}
+                        <div class="marca-producto">{{ producto.marca_id.1 }}</div>
+                        {% endif %}
+                        <div class="precio">${{ producto.list_price }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carrusel-flecha carrusel-anterior" onclick="moverCarrusel(-1)" aria-label="Anterior">&#10094;</button>
+            <button class="carrusel-flecha carrusel-siguiente" onclick="moverCarrusel(1)" aria-label="Siguiente">&#10095;</button>
+
+            <div class="carrusel-indicadores" id="carrusel-indicadores">
+                {% for producto in productos_carrusel %}
+                <button class="carrusel-punto{% if forloop.first %} activo{% endif %}" onclick="irASlide({{ forloop.counter0 }})" aria-label="Ir a la diapositiva {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if productos_carrusel %}
+        <div class="landing-grid-titulo">
+            <h3>Productos destacados</h3>
+            <p>Una probadita de lo que encontrarás en el catálogo completo</p>
+        </div>
+        <div class="landing-grid-productos">
+            {% for producto in productos_carrusel|slice:":8" %}
+            <a href="{% url 'productos:login' %}" class="grid-producto">
+                <div class="grid-producto-imagen">
+                    {% if producto.imagen %}
+                    <img src="{% static producto.imagen %}" alt="{{ producto.name }}">
+                    {% endif %}
+                </div>
+                <div class="grid-producto-info">
+                    {% if producto.marca_id %}
+                    <div class="marca-producto">{{ producto.marca_id.1 }}</div>
+                    {% endif %}
+                    <h4>{{ producto.name }}</h4>
+                    <div class="precio">${{ producto.list_price }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section class="landing-cta">
+            <h3>Inicia sesión para ver el catálogo completo</h3>
+            <p>Accede a todos los productos, precios y disponibilidad de stock, y realiza tus pedidos.</p>
+            <div class="botones-cta">
+                <a href="{% url 'productos:login' %}" class="boton-finalizar">Iniciar sesión</a>
+                <a href="{% url 'productos:registro' %}" class="boton-seguir">Crear cuenta</a>
+            </div>
+        </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let indiceActual = 0;
+
+        function actualizarCarrusel() {
+            const pista = document.getElementById('carrusel-pista');
+            if (!pista) return;
+            pista.style.transform = `translateX(-${indiceActual * 100}%)`;
+
+            document.querySelectorAll('.carrusel-punto').forEach((punto, indice) => {
+                punto.classList.toggle('activo', indice === indiceActual);
+            });
+        }
+
+        function moverCarrusel(direccion) {
+            const totalSlides = document.querySelectorAll('.carrusel-slide').length;
+            if (totalSlides === 0) return;
+            indiceActual = (indiceActual + direccion + totalSlides) % totalSlides;
+            actualizarCarrusel();
+        }
+
+        function irASlide(indice) {
+            indiceActual = indice;
+            actualizarCarrusel();
+        }
+
+        // Avanzo automáticamente cada 4 segundos
+        if (document.querySelectorAll('.carrusel-slide').length > 1) {
+            setInterval(() => moverCarrusel(1), 4000);
+        }
+    </script>
+{% endblock %}
